@@ -1,0 +1,62 @@
+This fix incorporates suggestions from PPSWeb and Jezmeister as documented here: http://forum.snitz.com/forum/topic.asp?TOPIC_ID=64720&whichpage=1
+
+
+
+Jezmeister: you need to add a second check for usergroup which is usually done in inc_header (because at the time there's no member ID) try this (edit, this should work, I think, note I'm assuming from code in this page and inc_header this is enough - i could be wrong but worth a shot)
+
+in post_info find:
+
+if not(IsNull(strSelectSize)) and strSelectSize <> "" then 
+	if strSetCookieToForum = 1 then
+    		Response.Cookies(strUniqueID & "strSelectSize").Path = strCookieURL
+	else
+		Response.Cookies(strUniqueID & "strSelectSize").Path = "/"
+	end if
+	Response.Cookies(strUniqueID & "strSelectSize") = strSelectSize
+	Response.Cookies(strUniqueID & "strSelectSize").expires = dateAdd("yyyy", 1, strForumTimeAdjust)
+end if
+
+
+
+add this below:
+
+if mLev < 1 and strDBNTUserName <> "" then
+	'Get userid from strdbntusername
+	strSql = "SELECT * FROM "& strTablePrefix &"MEMBERS WHERE M_NAME='"& strDBNTUserName &"'"
+	rsid = my_Conn.Execute(strSql)
+	MemberID = rsid("MEMBER_ID")
+	set rsid = nothing
+End if
+
+
+
+
+PPSSWeb: Ok, so the code posted above does work! At least I think it does. Just not where it was said to add it. Instead add it to the same location in Post.asp.
+
+If the user is not logged in, the new code returns MemberID = -1. But nothing in the usergroups mod is set to check for this, so you need to add that bit too.
+
+A little further down the page in Post.asp find:
+
+	'#######    Begin UserGroup MOD     #######	
+	if isDeniedMember(strRqForumID,MemberID) = 1 then
+		Go_Result "You have been denied access to this forum"
+	end if
+	if isReadOnly(strRqForumID,MemberID) = 1 then
+		Go_Result "Your access to this forum is read-only"
+	end if
+	'#######     End UserGroup MOD      #######
+
+
+and replace it with:
+
+	'#######    Begin UserGroup MOD     #######	
+	If MemberID < 1 Then
+		Go_Result "You must be logged in to Post to this forum"
+	End IF
+	if isDeniedMember(strRqForumID,MemberID) = 1 then
+		Go_Result "You have been denied access to this forum"
+	end if
+	if isReadOnly(strRqForumID,MemberID) = 1 then
+		Go_Result "Your access to this forum is read-only"
+	end if
+	'#######     End UserGroup MOD      #######

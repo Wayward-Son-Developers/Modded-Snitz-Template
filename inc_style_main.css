@@ -1,0 +1,928 @@
+/* v CSS Reset/Baseline v */
+/*
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.8.0r4
+*/
+/**
+ * YUI Reset
+ * @module reset
+ * @namespace
+ * @requires 
+ */
+html {
+	color: #000;
+	background: #FFF;
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+fieldset,
+img {
+	border: 0;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var,
+optgroup {
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+del,
+ins {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+caption,
+th {
+	text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+q:before,
+q:after {
+	content: '';
+}
+
+abbr,
+acronym {
+	border: 0;
+	font-variant: normal;
+}
+
+blockquote {
+	margin: 10px 15px;
+	padding:1px 0px 1px 10px;
+	}
+
+sup {
+	vertical-align: baseline;
+}
+
+sub {
+	vertical-align: baseline;
+}
+
+/*because legend doesn't inherit in IE */
+legend {
+	color: #000;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input,
+button,
+textarea,
+select {
+	*font-size: 100%;
+}
+
+/* ^ CSS Reset/Baseline ^ */
+
+/**********************************************************************************************/
+
+/* v Default page styles v */
+body { 
+	background:white url(none);
+	color:midnightblue;
+	font-family:Verdana, Arial, Helvetica;
+	font-size:75%;
+	margin-left:auto;
+	margin-right:auto;
+	}
+
+p {
+	clear:both;
+	margin-top:1em;
+	margin-bottom:1em;
+	}
+
+hr {
+	border:0;
+	color:#aaa;
+	background-color:#aaa;
+	height:1px;
+	margin-top:10px;
+	margin-bottom:10px;
+	}
+
+b,strong {
+	font-weight:bold;
+	}
+
+i,em {
+	font-style:italic;
+	}
+
+ins {
+	text-decoration:none;
+	color:black;
+	background:yellow;
+	}
+
+del {
+	text-decoration:line-through;
+	color:black;
+	background:yellow;
+	}
+
+ul {
+	list-style:disc;
+	margin-left:30px;
+	margin-bottom:1em;
+	}
+
+ol {
+	margin-left:30px;
+	margin-bottom:1em;
+	}
+
+ol ul,ul ol,ul ul,ol ol {
+	margin-bottom:0;
+	}
+
+pre, code, tt {
+	font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+	}
+
+textarea, input, select, button {
+	font-size:100%;
+	font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+	border:1px solid black;
+	}
+
+textarea, input, button {
+	padding:3px;
+	}
+
+input[type="checkbox"], input[type="radio"] {
+	border:0px;
+	}
+
+a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+a:visited { 
+	color:blue;
+	text-decoration:underline;
+	}
+a:active { 
+	color:red;
+	text-decoration:underline;
+	}
+a:hover { 
+	color:red;
+	text-decoration:underline;
+	}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:bold;
+	margin:15px 0 5px;
+	padding:2px 0;
+	border-top:2px solid;
+	border-bottom:2px solid;
+}
+
+h1 {
+	font-size:180%;
+	}
+
+h2 {
+	font-size:160%;
+	}
+
+h3 {
+	font-size:140%;
+	}
+
+h4 {
+	font-size:120%;
+	}
+
+h5 {
+	font-size:100%;
+	}
+
+h6 {
+	font-size:80%;
+	}
+
+small {
+	font-size:85%;
+	}
+
+big {
+	font-size:115%;
+	}
+
+sup {
+	font-size:80%;
+	position:relative;
+	top:-0.4em;
+	}
+
+sub {
+	position:relative;
+	top:.3em;
+	font-size:80%;
+	}
+
+td {
+	padding:4px;
+	}
+/* ^ Default page styles ^ */
+
+
+/* v Snitz Styles for Customization v */
+
+/* Header stuff */
+.masthead {
+	font-size:75%;
+	margin-left:auto;
+	margin-right:auto;
+	}
+
+.logo {
+	margin:0px;
+	vertical-align:top;
+	}
+
+.gfxbutton {
+	border:0px;
+	vertical-align:middle;
+	}
+
+.title {
+	font-weight:bold;
+	font-size:170%;
+	margin:5px 0px 0px 0px;
+	}
+
+.navtxt {
+	margin:2px 0px;
+	}
+
+.secondnav {
+	padding:0px;
+	}
+
+.reloadmenu {
+	/* the reload menu on active.asp */
+	vertical-align:bottom;
+	text-align:right;
+	padding:0px;
+	}
+
+.contentcontainer { 
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+
+/* Old "In-Cell" styles */
+.content, .content td, .admin td.content{ 
+	border:1px solid black;
+	background:whitesmoke;
+	color:black;
+	vertical-align:top;
+	margin-left:auto;
+	margin-right:auto;
+	}
+.content a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.content a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.content a:active {
+	color:red;
+	text-decoration:underline;
+	}
+.content a:hover {
+	color:red;
+	text-decoration:underline;
+	}
+.content ul li {
+	list-style-type:disc;
+	}
+.content ol li {
+	list-style-type:decimal;
+	}
+
+/* Old "Pop Up Table" styles */
+.admin, .admin td {
+	border:1px solid black;
+	background:lightsteelblue;
+	color:black;
+	vertical-align:top;
+	margin-left:auto;
+	margin-right:auto;
+	}
+.admin a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.admin a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.admin a:active {
+	color:red;
+	text-decoration:underline;
+	}
+.admin a:hover {
+	color:red;
+	text-decoration:underline;
+	}
+
+/* Success Message Styles */
+.ok, .ok td {
+	border:2px solid black;
+	background:LightGreen;
+	color:black;
+	font-size:large;
+	text-align:center;
+	padding:10px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+.ok a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.ok a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.ok a:active {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+.ok a:hover {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+
+/* Warning Message Styles */
+.warning, .warning td {
+	border:2px solid black;
+	background:Yellow;
+	color:black;
+	font-size:large;
+	text-align:center;
+	padding:10px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+.warning a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.warning a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.warning a:active {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+.warning a:hover {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+
+/* Error Message Styles */
+.oops, .oops td {
+	border:2px solid black;
+	background:Red;
+	color:white;
+	font-size:large;
+	font-weight:bolder;
+	text-align:center;
+	padding:10px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+.oops a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.oops a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.oops a:active {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+.oops a:hover {
+	color:whitesmoke;
+	text-decoration:underline;
+	}
+
+.oops ul li {
+	list-style:disc;
+	margin:5px 10px;
+	text-align:left;
+	}
+
+/* FYI Message Styles */
+.fyi, .fyi td {
+	border:2px solid black;
+	background:Gainsboro;
+	color:black;
+	font-size:large;
+	font-weight:bolder;
+	text-align:center;
+	padding:10px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+.fyi a:link { 
+	color:darkblue;
+	text-decoration:underline;
+	}
+.fyi a:visited {
+	color:blue;
+	text-decoration:underline;
+	}
+.fyi a:active {
+	color:darkblue;
+	text-decoration:underline;
+	}
+.fyi a:hover {
+	color:red;
+	text-decoration:underline;
+	}
+
+.fyi ul li {
+	list-style:disc;
+	margin:5px 10px;
+	text-align:left;
+	}
+
+/* To make the [warning|ok|oops] styles a little different on the Setup and MOD Setup messages. */
+.modsetup {
+	text-align:left;
+	font-size:small;
+	font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif;
+	}
+
+.shortstats {
+	border:1px solid black;
+	background:lightsteelblue;
+	color:black;
+	margin-left:auto;
+	margin-right:auto;
+	}
+
+/* "Header Cell" Styles */
+.header, .header td { 
+	font-size:110%;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:middle;
+	background:midnightblue;
+	color:mintcream;
+	}
+.header a:link { 
+	color:mintcream;
+	text-decoration:underline;
+	}
+.header a:visited {
+	color:mintcream;
+	text-decoration:underline;
+	}
+.header a:active {
+	color:mintcream;
+	text-decoration:underline;
+	}
+.header a:hover {
+	color:mintcream;
+	text-decoration:underline;
+	}
+
+/* "Category Cell" Styles */
+.section, .section td {
+	font-weight:bold;
+	background:slateblue;
+	color:mintcream;
+	vertical-align:middle;
+	}
+.section a:link { 
+	color:mintcream;
+	text-decoration:underline;
+	}
+.section a:visited {
+	color:mintcream;
+	text-decoration:underline;
+	}
+.section a:active {
+	color:mintcream;
+	text-decoration:underline;
+	}
+.section a:hover {
+	color:mintcream;
+	text-decoration:underline;
+	}
+
+.forumlink {
+	margin-top:0px;
+	}
+
+.authlink {
+	margin-top:0px;
+	text-align:center;
+	}
+
+.forumdesc {
+	}
+
+.counts {
+	text-align:center;
+	white-space:nowrap;
+	}
+
+.lastpost {
+	font-size:75%;
+	font-weight:bold;
+	}
+
+.lastuser {
+	font-size:75%;
+	}
+
+td.statusicon {
+	text-align:center;
+	}
+
+.options, td.options {
+	text-align:center;
+	white-space:nowrap;
+	}
+td.options img {
+	vertical-align:middle;
+	}
+
+.formlabel {
+	text-align:right;
+	vertical-align:baseline;
+	font-weight:bold;
+	}
+
+.formvalue {
+	text-align:left;
+	vertical-align:baseline;
+	}
+
+/* FAQ Q and A */
+td.faq {
+	background:Gainsboro;
+	font-weight:bold;
+	color:black;
+	}
+
+td.faqans {
+	background:whitesmoke;
+	color:black;
+	}
+
+/* Forum First Cell */
+.ffc, td.ffc { 
+	background:whitesmoke;
+	} 
+
+/* Forum First Alternating Cell */
+.ffac, td.ffac {
+	background:whitesmoke;
+	}
+
+/* Forum Second Alternating Cell */
+.fsac, td.fsac {
+	background:Gainsboro;
+	}
+
+.misc {
+	margin-bottom:10px;
+	width:100%;
+	}
+.misc2 {
+	margin-top:10px;
+	width:100%;
+	}
+
+.legend {
+	width:25%;
+	}
+
+.jumpmenu {
+	font-weight:bold;
+	text-align:right;
+	vertical-align:top;
+	padding:0px;
+	}
+
+.topicpaging {
+	font-size:75%;
+	text-align:right;
+	vertical-align:bottom;
+	}
+
+.toppaging {
+	padding:0px;
+	text-align:right;
+	vertical-align:bottom;
+	}
+
+.bottompaging {
+	padding:0px;
+	text-align:left;
+	vertical-align:top;
+	}
+
+.smtext {
+	font-size:75%;
+	}
+
+/* "Footer Cell" Styles */
+.footer { 
+	font-size:75%;
+	vertical-align:bottom;
+	margin-left:auto;
+	margin-right:auto;
+	}
+
+.footertitle {
+	text-align:left;
+	background:#F5F5F5;
+	}
+
+.timertext {
+	text-align:center;
+	background:#F5F5F5;
+	}
+
+.copyright {
+	text-align:right;
+	background:#F5F5F5;
+	}
+
+.footernav {
+	font-weight:bold;
+	text-align:center;
+	}
+
+.printerfriendly, .printerfriendly td { 
+	border:1px solid black;
+	background:white;
+	color:black;
+	vertical-align:top;
+	margin-left:auto;
+	margin-right:auto;
+	}
+.printerfriendly a:link { 
+	color:black;
+	text-decoration:underline;
+	}
+.printerfriendly a:visited {
+	color:black;
+	text-decoration:underline;
+	}
+.printerfriendly a:active {
+	color:black;
+	text-decoration:underline;
+	}
+.printerfriendly a:hover {
+	color:black;
+	text-decoration:underline;
+	}
+.printerfriendly ul li {
+	list-style-type:disc;
+	}
+.printerfriendly ol li {
+	list-style-type:decimal;
+	}
+.printerfriendly .header, .printerfriendly td.header {
+	background:Gainsboro;
+	font-weight:bold;
+	color:black;
+	vertical-align:top;
+	}
+
+table.nb td {
+	border:none;
+	}
+
+/* HighLite Font Color */
+.hlf {
+	color:red;
+	}
+
+/* Search Highlighting */
+.foundword, td.foundword { 
+	text-decoration:none;
+	color:black;
+	background:yellow;
+	}
+
+/* v Tags formatting v */
+
+ol.decimal li {
+	list-style:decimal;
+	}
+
+ol.alpha li {
+	list-style-type:upper-alpha;
+	}
+
+.scrollcode {
+	height:200px;
+	/* width:650px; */
+	max-width:90%;
+	min-width:60%;
+	overflow:scroll;
+	color:white;
+	background-color:black;
+	border:thin solid black;
+	font-family:Courier New, Courier, Monaco, mono;
+	font-size:8pt;}
+.scrollcode a {
+	color:white;
+	text-decoration:none;
+	}
+
+blockquote.quote {
+	/* border:2px solid gray; */
+	}
+
+.callout {
+	background:white;
+	border:1px solid black;
+	padding:5px;
+	margin-left:4em;
+	margin-top:1em;
+	margin-bottom:1em;
+	max-width:90%;
+	min-width:60%;
+	}
+	
+.spoiler {
+	background:white;
+	color:white;
+	border:0;
+	padding:5px;
+	margin-left:4em;
+	margin-top:1em;
+	margin-bottom:1em;
+	max-width:90%;
+	min-width:60%;
+	}
+/* ^ Tags formatting ^ */
+
+/* ^ Snitz Styles for Customization ^ */
+
+/* Old SB2 Snitz CSS file
+
+.pb				{ background:white url(none); }
+
+.dfs	 		{ font-size:75%; }
+.hfs 			{ font-size:110%; }
+.ffs			{ font-size:75%; }
+
+.dff	 		{ font-family:Verdana, Arial, Helvetica; }
+.dfc 			{ color:midnightblue; }
+ a:link			{ color:darkblue; text-decoration:underline; }
+ a:visited		{ color:blue; text-decoration:underline; }
+ a:active		{ color:red; text-decoration:underline; }
+ a:hover		{ color:red; text-decoration:underline; }
+
+.hcc	 		{ background:midnightblue; }
+.hfc	 		{ color:mintcream; }
+.hfc a:link		{ color:mintcream; text-decoration:underline; }
+.hfc a:visited	{ color:mintcream; text-decoration:underline; }
+.hfc a:active	{ color:mintcream; text-decoration:underline; }
+.hfc a:hover	{ color:mintcream; text-decoration:underline; }
+
+.ccc		 	{ background:slateblue; }
+.cfc 			{ color:mintcream; }
+.cfc a:link		{ color:mintcream; text-decoration:underline; }
+.cfc a:visited	{ color:mintcream; text-decoration:underline; }
+.cfc a:active	{ color:mintcream; text-decoration:underline; }
+.cfc a:hover	{ color:mintcream; text-decoration:underline; }
+
+.fcc 			{ background:whitesmoke; }
+.ffcc 			{ background:whitesmoke; }
+.ffacc 			{ background:whitesmoke; }
+.fsacc 			{ background:Gainsboro; }
+
+.iffc 			{ color:midnightblue; }
+.iffc a:link	{ color:darkblue; text-decoration:underline; }
+.iffc a:visited	{ color:blue; text-decoration:underline; }
+.iffc a:active	{ color:red; text-decoration:underline; }
+.iffc a:hover	{ color:red; text-decoration:underline; }
+
+.tbc,
+.tbc td			{ border:1px solid black; border-collapse:collapse; }
+
+.putc 			{ background:lightsteelblue; }
+.putbc,
+.putbc td		{ border:1px solid black; border-collapse:collapse; }
+
+.hlfc 			{ color:red; }
+.hlbc 			{ background:yellow; }
+
+.scrollcode		{ height:200px; width:650px; overflow:scroll; 
+				  color:white; background-color:black; border:thin solid black; 
+				  font-family:Courier New, Courier, Monaco, mono; font-size:8pt;}
+.scrollcode a   { color:white; }
+
+.callout        { background:white; border: 1px solid black; padding:5px; margin-left:4em; margin-top:1em; margin-bottom:1em; width:60%; }
+
+input.radio 	{ color:black; }
+form			{ margin:0px; border:0px;}
+.tc				{ margin-left:auto; margin-right:auto; }
+.l				{ text-align:left; }
+.c				{ text-align:center; }
+.r				{ text-align:right; }
+.nw				{ white-space:nowrap; }
+.nb				{ border:none; }
+*/

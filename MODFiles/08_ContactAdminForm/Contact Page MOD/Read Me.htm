@@ -1,0 +1,278 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Contact Page MOD for Snitz Forums</title>
+</head>
+
+<body>
+
+<p><font face="Arial" size="4"><b>Contact Page MOD for Snitz Forums 3.4.05 and 
+3.4.06<br>
+v1.1<br>
+This MOD assembled by leatherlips</b></font></p>
+<p><font face="Arial">Special thanks goes to Carefree and TastyNutz for their 
+help in working out the anti spam feature and hiding the email address in the 
+source code.</font></p>
+<p><font face="Arial"><b>Ease of implementation on a scale from 1-10 with 1 
+being the easiest: 1</b></font></p>
+<p><font face="Arial"><a href="#purpose">Purpose</a><br>
+<a href="#features">Features</a><br>
+<a href="#instructions">Instructions</a><br>
+<a href="#upgrading">Upgrading from v1.0 to v1.1</a><br>
+<a href="#optionalchanges">Optional Changes</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#faq">Changes to FAQ Page</a><br>
+&nbsp;&nbsp;&nbsp; <a href="#policy">Changes to Policy Page</a><br>
+<a href="#version">Version History</a><br>
+<a href="#screenshot">Screenshot</a><br>
+<a href="#support">Support</a></font></p>
+<hr>
+<p><b><font face="Arial"><a name="purpose"></a>Purpose</font></b></p>
+<p><font face="Arial">The purpose of this mod is to provide a contact page that visitors to your site can 
+use to easily contact you.</font></p>
+<hr>
+<p><b><font face="Arial"><a name="features"></a>Features</font></b></p>
+<p><font face="Arial">This contact page has several features built in.</font></p>
+<ul>
+	<li><font face="Arial">It checks to see if all fields have been entered.&nbsp; 
+	If not, it gives a warning to go back and fill in the necessary information.</font></li>
+	<li><font face="Arial">It includes an anti spam code that a user must input 
+	correctly before the form will be sent.&nbsp; This helps to prevent bots 
+	from automatically spamming your contact page.</font></li>
+	<li><font face="Arial">The email address that the contact form is sent to is 
+	hidden in the source code.&nbsp; This helps to prevent bots from learning 
+	your email address and spamming it.</font></li>
+	<li><font face="Arial">It includes a character count that limits how much 
+	can be typed.&nbsp; The default is 500 characters but can easily be changed 
+	- <a href="#fieldlimiter">see below</a>.</font></li>
+	<li><font face="Arial">It includes an automatic spam filter that detects 
+	known words used in spam emails.&nbsp; If any of the words are detected then 
+	the form will not be sent and the user will automatically be redirected to 
+	the website of your choice.</font></li>
+</ul>
+<hr>
+<p><b><font face="Arial"><a name="instructions"></a>Instructions</font></b></p>
+<p><font face="Arial"><b>Step 1:</b>&nbsp; Upload the following files to your 
+forums directory:</font></p>
+<ol>
+	<li><font face="Arial">contact.asp</font></li>
+	<li><font face="Arial">formfieldlimiter.js</font></li>
+</ol>
+<p><font face="Arial"><b>Step 2:</b>&nbsp; Upload the following image files to 
+your forums image location <font color="#FF0000">(Important: if you already have 
+custom anti spam number images then you do not need these.&nbsp; Otherwise you 
+will overwrite your images with these which is something you may not want to do)</font>:</font></p>
+<ol>
+	<li><font face="Arial">0.gif</font></li>
+	<li><font face="Arial">1.gif</font></li>
+	<li><font face="Arial">2.gif</font></li>
+	<li><font face="Arial">3.gif</font></li>
+	<li><font face="Arial">4.gif</font></li>
+	<li><font face="Arial">5.gif</font></li>
+	<li><font face="Arial">6.gif</font></li>
+	<li><font face="Arial">7.gif</font></li>
+	<li><font face="Arial">8.gif</font></li>
+	<li><font face="Arial">9.gif</font></li>
+</ol>
+<p><font face="Arial"><b>Step 3: </b>&nbsp;Open your inc_header.asp page.</font></p>
+<p><font face="Arial">Look for the second instance of:</font></p>
+<p><script language="Javascript">
+<!--
+
+/*
+Select All script- By JavaScript Kit(http://www.javascriptkit.com) 
+Over 400+ free JavaScripts here!
+*/
+
+function selectAll(theField) {
+var tempval=eval("document."+theField)
+tempval.focus()
+tempval.select()
+}
+//-->
+</script>
+<form name="incheader">
+<font face="Arial">
+<a href="javascript:selectAll('incheader.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100>'## END   - REMOVAL, MODIFICATION OR CIRCUMVENTING THIS CODE WILL VIOLATE THE SNITZ FORUMS 2000 LICENSE AGREEMENT</textarea>
+</form>
+<p><font face="Arial">Below that add:</font></p>
+<p><form name="incheader1">
+<font face="Arial">
+<a href="javascript:selectAll('incheader1.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100>Response.Write "<script type=""text/javascript"" src=""formfieldlimiter.js""></script>" & vbNewLine</textarea>
+</form>
+</p>
+<p><font face="Arial">Look for:</font></p>
+<p><form name="incheader2">
+<font face="Arial">
+<a href="javascript:selectAll('incheader2.select1')">Select All</a></font><br>
+<textarea name="select1" rows=4 cols=100>"          <a href=""faq.asp""" & dWStatus("Answers to Frequently Asked Questions...") & " tabindex=""-1""><acronym title=""Answers to Frequently Asked Questions..."">FAQ</acronym></a>" & vbNewline</textarea>
+</form>
+</p>
+<p><font face="Arial">Change it to:</font></p>
+<p><form name="incheader3">
+<font face="Arial">
+<a href="javascript:selectAll('incheader3.select1')">Select All</a></font><br>
+<textarea name="select1" rows=4 cols=100>"          <a href=""faq.asp""" & dWStatus("Answers to Frequently Asked Questions...") & " tabindex=""-1""><acronym title=""Answers to Frequently Asked Questions..."">FAQ</acronym></a>" & vbNewline & _</textarea>
+</form>
+</p>
+<p><font face="Arial">Below it add:</font></p>
+<p><form name="incheader4">
+<font face="Arial">
+<a href="javascript:selectAll('incheader4.select1')">Select All</a></font><br>
+<textarea name="select1" rows=5 cols=100>"          |" & vbNewline & _
+         "          <a href=""contact.asp""" & dWStatus("Contact Us") & " tabindex=""-1""><acronym title=""Contact Us"">Contact</acronym></a>" & vbNewline</textarea>
+</form>
+</p>
+<p><font face="Arial">Look for:</font></p>
+<p><form name="incheader5">
+<font face="Arial">
+<a href="javascript:selectAll('incheader5.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100>not(Instr(Request.ServerVariables("Path_Info"), "faq.asp") > 0) and _</textarea>
+</form>
+</p>
+<p><font face="Arial">Below that add:</font></p>
+<p><form name="incheader6">
+<font face="Arial">
+<a href="javascript:selectAll('incheader6.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100>not(Instr(Request.ServerVariables("Path_Info"), "contact.asp") > 0) and _</textarea>
+</form>
+</p>
+<p><b><font face="Arial">That's it!&nbsp; You now have a working contact page 
+for your forum!</font></b></p>
+<hr>
+<p><b><font face="Arial"><a name="upgrading"></a>Upgrading</font></b></p>
+<p><font face="Arial">To upgrade from version 1.0 to version 1.1 simply upload 
+the contact.asp file and allow it to overwrite your existing one.&nbsp; Note 
+that if you made any custom changes to the v1.0 contact.asp file you will need 
+to reapply them to the v1.1 contact.asp file.</font></p><hr>
+<p><b><font face="Arial"><a name="optionalchanges"></a>Optional Changes</font></b></p>
+<p><font face="Arial">The changes below are optional.&nbsp; If you would like to 
+apply them then go ahead.&nbsp; Otherwise you are finished.</font></p>
+<p align="center"><font face="Arial">
+**************************************************</font></p>
+<p><font face="Arial"><a name="fieldlimiter"></a>If you would like to change the 
+number of maximum characters for the message input, then open contact.asp and go 
+to line 253.&nbsp; You will see this line:</font></p>
+<p><font face="Arial">&quot; maxlength: <font color="#FF0000">500</font>,&quot; &amp; 
+vbNewLine &amp; _</font></p>
+<p><font face="Arial">Change the number in red to the maximum number of 
+characters you will allow.</font></p>
+<p align="center"><font face="Arial">
+**************************************************</font></p>
+<p align="left"><font face="Arial">If you would like to add words to your spam 
+filter then open contact.asp and go to line 121.&nbsp; You will see some words 
+already listed.&nbsp; <b><font color="#FF0000">Note that some may find these 
+words offensive.&nbsp; However, they are listed because these are words commonly 
+used by spammers.</font></b> Simply add your own words to the ones that are 
+already there.&nbsp; Be sure to put a comma after each new word.&nbsp; DO NOT 
+put spaces between them.</font></p>
+<p align="left"><font face="Arial">You can also change where the spammer is 
+redirected if they use any of the listed words.&nbsp; Simply change the url on 
+line 136 of contact.asp.</font></p>
+<p align="left"><font face="Arial">Alternatively, if you do not want the anti 
+spam filter, you can simply comment out or delete lines 120 - 138.&nbsp; To 
+comment out the lines, place a ' in front of each line from 120 - 138.</font></p>
+<p align="center"><font face="Arial">
+**************************************************</font></p>
+<p align="left"><b><font face="Arial"><a name="faq"></a>To allow your faq.asp page to connect with 
+your contact.asp page, do the following:</font></b></p>
+<p align="left"><font face="Arial">Open faq.asp</font></p>
+<p align="left"><font face="Arial">Look For:</font></p>
+<p align="left"><form name="faq">
+<font face="Arial">
+<a href="javascript:selectAll('faq.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100><a href=""mailto:" & strSender & """>Can't find your answer here? Send us an e-mail.</a></textarea>
+</form></p>
+<p><font face="Arial">Change it to:</font></p>
+<p><form name="faq2">
+<font face="Arial">
+<a href="javascript:selectAll('faq2.select1')">Select All</a></font><br>
+<textarea name="select1" rows=2 cols=100><a href=""contact.asp""" & dWStatus("Contact the Administrator") & " tabindex=""-1"">Can't find your answer here? Send us an e-mail.</a></textarea>
+</form>
+<p><font face="Arial">Also, to remove your email address from within the faq page and replace it 
+with an example email address, look for:</font></p>
+<p><form name="faq3">
+<font face="Arial">
+<a href="javascript:selectAll('faq3.select1')">Select All</a></font><br>
+<textarea name="select1" rows=5 cols=100>"                       If you have a question <b>[url=&quot;" & strSender & "&quot;]</b>E-Mail Me<b>[/url]</b><br />" & vbNewLine & _
+      "                       <i>Outputs This:</i><br />" & vbNewLine & _
+      "                       If you have a question <span class=""spnMessageText""><a href=""mailto:" & strSender & """>E-Mail Me</a></span>" & vbNewLine & _</textarea>
+</form>
+</p>
+<p><font face="Arial">Replace it with:</font></p>
+<p><form name="faq4">
+<font face="Arial">
+<a href="javascript:selectAll('faq4.select1')">Select All</a></font><br>
+<textarea name="select1" rows=5 cols=100>"                       If you have a question <b>[url=&quot;example@example.com&quot;]</b>E-Mail Me<b>[/url]</b><br />" & vbNewLine & _
+            "                       <i>Outputs This:</i><br />" & vbNewLine & _
+            "                       If you have a question <span class=""spnMessageText""><a href=""mailto:example@example.com"">E-Mail Me</a></span>" & vbNewLine & _</textarea>
+</form></p>
+<p align="center"><font face="Arial">
+**************************************************</font></p>
+<p align="left"><b><font face="Arial"><a name="policy"></a>To allow your 
+policy.asp (version 3.4.05) or your register.asp (version 3.4.06) page to connect with 
+your contact.asp page, do the following:</font></b></p>
+
+<p align="left"><font face="Arial">If you have version 3.4.05 make the changes 
+below to your policy.asp page.&nbsp; If you have version 3.4.06 make the changes 
+below to your inc_policy.asp page.</font></p>
+<p align="left"><font face="Arial">Look for:</font></p>
+<p align="left"><form name="policy">
+<font face="Arial">
+<a href="javascript:selectAll('policy.select1')">Select All</a></font><br>
+<textarea name="select1" rows=5 cols=100>"                <p>If you have any questions about this privacy statement " & _
+      "or the use of these forums, you can contact the forum administrator at: " & _
+      "<span class=""spnMessageText""><a href=""mailto:" & strSender & """>" & strSender & "</a></span></p>" & vbNewLine & _</textarea>
+</form></p>
+<p><font face="Arial">Change it to:</font></p>
+<p><form name="policy2">
+<font face="Arial">
+<a href="javascript:selectAll('policy2.select1')">Select All</a></font><br>
+<textarea name="select1" rows=5 cols=100>"                <p>If you have any questions about this privacy statement " & _
+      "or the use of these forums, you can <span class=""spnMessageText""><a href=""contact.asp""" & dWStatus("Contact the Administrator") & " tabindex=""-1""><acronym title=""Contact the Administrator"">contact the forum administrator</acronym></a></span>.</p>" & vbNewLine & _</textarea>
+</form><hr>
+<p><font face="Arial"><a name="version"></a><b>Version History</b></font></p>
+<ul>
+	<li><font face="Arial">Version 1.1</font><ul>
+		<li><font face="Arial">Added the ability for the sender of the form to 
+		choose to receive a copy of the message sent to their own email address.</font></li>
+	</ul>
+	</li>
+</ul>
+<hr>
+<p><b><font face="Arial"><a name="screenshot"></a>Screenshot</font></b></p>
+<p><font face="Arial">Here is a screenshot of what the form looks like on a 
+default installation of Snitz Forums 2000.</font></p>
+<p><img border="0" src="screenshot.gif" width="683" height="406"></p>
+<hr>
+<p align="left"><b><font face="Arial"><a name="support"></a>Support</font></b></p>
+<p align="left"><font face="Arial">For support for this mod visit the Snitz 
+Forums at <a href="http://forum.snitz.com/forum/forum.asp?FORUM_ID=94">
+http://forum.snitz.com/forum/forum.asp?FORUM_ID=94</a>.</font></p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+</body>
+
+</html>

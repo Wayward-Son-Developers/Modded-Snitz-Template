@@ -1,0 +1,1727 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>UserGroups MOD</title>
+<style>
+body    {font-family:Verdana, sans-serif;
+        font-size: 10pt;}
+table    {font-family:Verdana, sans-serif;
+        font-size: 10pt;}
+textarea     { font-size: 11px; background-color: #DCDCDC; overflow: scroll; width: 100%; 
+               color: #191970; height: 150px; font-family: monospace  }
+.result      { font-size: 11px; background-color: #DEDEF7; overflow: scroll; width: 100%; 
+               color: #191970; height: 150px; font-family: monospace  }
+img        {margin: 5px; }
+</style>
+</head>
+
+<body>
+
+<h1 align="center">UserGroups MOD v1.0 for Snitz v3.4.x<br>
+  Beta Version <font color="#800000">3</font></h1>
+<h2 align="center">Installation and Use</h2>
+<p align="center"><a href="#Description">Description</a> | <a href="#Installation"> Installation</a> |
+<a href="#How_to_Use"> How to Use the UserGroups MOD</a> | <a href="#Uninstalling">Uninstalling</a></p>
+<hr>
+<h3><a name="Description">Description</a></h3>
+<p>The UserGroups MOD v1.0 allows grouping of forum members that greatly
+improves member management and offers a few added features to the basic
+functionality of the Snitz base code.&nbsp; A summary of the features are listed
+below.&nbsp; See <a href="#How_to_Use"> How to Use the UserGroups MOD</a> for
+more details on these features.</p>
+<ul>
+  <li>Forum administrators can assign members to UserGroups and the use the
+    UserGroups to restrict access to &quot;Allowed Member List&quot; forums
+    based on three permission settings: Deny, Read-Only, and Allow.&nbsp;&nbsp;</li>
+  <li>Forums that are not an &quot;Allowed Member List&quot; forum can have
+    Deny and Read-Only permissions for each UserGroup.&nbsp;&nbsp;</li>
+  <li>UserGroup visibility by members and moderators is configurable by forum
+    administrators.</li>
+  <li>Individual UserGroups can be set as Hidden.</li>
+  <li>Auto-Join UserGroups on member registration.</li>
+</ul>
+<p>This MOD is not guaranteed to work in conjunction with other MODs.&nbsp; If
+you have previously modified your files, install and use at your own risk!&nbsp;
+Since this is a BETA version, there may be undiscovered bugs.&nbsp; The MOD has
+only been tested using DB authentication.</p>
+<p>The UserGroups MOD was written by Nikkol.&nbsp; For support, please visit the 
+  <a href="http://forum.snitz.com/forum/forum.asp?FORUM_ID=94">MOD Implementation</a> 
+  forum at <a href="http://forum.snitz.com">http://forum.snitz.com/forum/</a>.&nbsp;&nbsp;</p>
+<p>This MOD has recently been updated by AnonJr adding the code fixes as found 
+  in <a href="http://forum.snitz.com/forum/topic.asp?TOPIC_ID=48967">http://forum.snitz.com/forum/topic.asp?TOPIC_ID=48967</a> 
+  and <a href="http://forum.snitz.com/forum/topic.asp?TOPIC_ID=64720&whichpage=1">http://forum.snitz.com/forum/topic.asp?TOPIC_ID=64720&amp;whichpage=1</a>. 
+  Line numbers may not be the same as Snitz has moved up a few versions since 
+  this guide was written...</p>
+<p><font size="1">Many thanks to ruirib, Etymon, homeacademy, Classicmotorcycling,
+OneWayMule, PeeWee, Inc., and Dave6625 for making suggestions and catching bugs
+in the pre-Beta version!</font></p>
+<p><font size="1">Many thanks to Reinsnitz and altisdesign for helping in the
+release of BETA2!</font></p>
+<hr>
+<h3><a name="Installation">Installation</a></h3>
+<p><b>Options:</b></p>
+<ol>
+  <li><b>NEW forum installation</b><br>
+    Download Snitz v3.4.06 from http://forum.snitz.com/download.asp and follow 
+    the instructions in the readme.htm file found within that zip for installation
+    of a new forum.&nbsp; Continue with step 2 below.</li>
+  <li><b>Existing forum WITHOUT prior modification</b><br>
+    Follow the steps below until the instructions ask you to modify the forum
+    files.&nbsp; Copy the files found in the <b>forum files</b> folder to
+    your forum folder, making sure to set your strDBType and strConnString in
+    config.asp.</li>
+  <li><b>Existing forum WITH prior modification</b><br>
+    Follow all of the steps as outline below, being careful to compare code for
+    the files that you have previously modified.&nbsp; Remember, this MOD is not
+    guaranteed to work with existing MODs, so use at your own risk.</li>
+</ol>
+<p>Installation of this MOD requires extensive modification to existing code in
+14 forum files and the addition of 2 new files, 3 new tables in the database,
+and 3 new configuration variables.&nbsp; Be sure to read the instructions
+carefully.&nbsp; Print out a copy of the <a href="checklist.htm" target="_blank">checklist</a>
+and check off each item as you complete it.&nbsp;&nbsp;</p>
+<p>Make a backup of your existing forum files and your database
+before you begin.&nbsp; Although optional, I recommend making a copy of your
+existing forum folder, making the code changes to the copy, and thoroughly
+testing the installation before using it on a live forum.</p>
+<ul>
+  <li>Insert the following text into the Alternate MOD Setup
+      box in Admin Options.&nbsp; Verify that all tables and fields were created
+      successfully. (Now included in dbs_usergroup_install.asp - AnonJr)</li>
+</ul>
+<p><a href="#" onClick="document.getElementById('ta1').select();return false;">Select All</a><br>
+      <textarea wrap="off" name="ta1" rows="1" cols="20">[CREATE]
+USERGROUPS
+USERGROUP_ID
+USERGROUP_NAME#varchar(100)##
+USERGROUP_DESC#memo#NULL#
+USERGROUP_TYPE#int##0
+AUTOJOIN#int##0
+MEM_HIDE#int##0
+MOD_HIDE#int##0
+[END]
+
+[CREATE]
+USERGROUP_USERS
+
+USERGROUP_ID#int##
+MEMBER_ID#int##
+MEMBER_TYPE#int##1
+[END]
+
+[CREATE]
+ALLOWED_USERGROUPS
+
+USERGROUP_ID#int##
+FORUM_ID#int##
+PERMS#int##0
+[END]
+
+[INSERT]
+CONFIG_NEW
+(C_VARIABLE,C_VALUE)#('STRUGVIEW','0')
+(C_VARIABLE,C_VALUE)#('STRUGMEMVIEW','0')
+(C_VARIABLE,C_VALUE)#('STRUGMODFORUMS','0')
+[END]</textarea></p>
+<ul>
+  <li>Upload the files <b> usergroups.asp</b> and <b> admin_usergroups.asp</b> to
+      your forum folder.</li>
+  <li>Modify the following forum files per instructions.&nbsp; If
+      you have previously modified your files, be careful to add and/or replace the
+      specified code in the appropriate places.&nbsp; If you have installed any
+    MODs that require changes in the isAllowedMembers or OldisAllowedMembers
+    functions in inc_func_common.asp, then you will need to determine how to
+    modify the redesigned functions for this MOD.</li>
+</ul>
+<p align="center"><a href="#active.asp">active.asp</a> | <a href="#admin_home.asp">admin_home.asp</a>
+| <a href="#config.asp">config.asp</a>  | <a href="#forum.asp">forum.asp</a> | <a href="#inc_func_common.asp">inc_func_common.asp</a>
+| <a href="#inc_func_secure.asp">inc_func_secure.asp</a> | <a href="#inc_header.asp">inc_header.asp</a>
+| <a href="#inc_profile.asp">inc_profile.asp</a> | <a href="#pop_delete.asp">pop_delete.asp</a>
+| <a href="#pop_profile.asp">pop_profile.asp</a>
+| <a href="#post.asp">post.asp</a> | <a href="#post_info.asp">post_info.asp</a>
+| <a href="#register.asp">register.asp</a> | <a href="#topic.asp">topic.asp</a></p>
+<hr>
+<p><b><a name="active.asp">active.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 277 add:<br>
+      <a href="#" onClick="document.getElementById('ta2').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta2" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+    strDeniedForums = Session(strCookieURL & "DeniedForums" & MemberID)
+    if strDeniedForums <> "" and strDeniedForums <> "-1" then
+        strSql = strSql & " AND F.FORUM_ID NOT IN(" & Session(strCookieURL & "DeniedForums" & MemberID) & ") "
+    end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">if strPrivateForums = "1" and mLev < 4 then
+    strSql = strSql & " AND F.FORUM_ID IN (" & allAllowedForums & ") "
+end if
+'#######    Begin UserGroup MOD     #######
+    strDeniedForums = Session(strCookieURL & "DeniedForums" & MemberID)
+    if strDeniedForums <> "" and strDeniedForums <> "-1" then
+        strSql = strSql & " AND F.FORUM_ID NOT IN(" & Session(strCookieURL & "DeniedForums" & MemberID) & ") "
+    end if
+'#######     End UserGroup MOD      #######
+strSql = strSql & "AND F.F_TYPE = 0 " & _</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="admin_home.asp">admin_home.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 145 add:<br>
+      <a href="#" onClick="document.getElementById('ta3').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta3" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+Response.Write    "                <LI><span class=""spnMessageText""><a href=""admin_usergroups.asp"">UserGroups Manager</a></span></LI>" & vbNewLine
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">if strEmailVal = "1" then Response.Write("                <LI><span class=""spnMessageText""><a href=""admin_accounts_pending.asp"">Members Pending</a></span>&nbsp;<font size=""" & strFooterFontSize & """>(" & User_Count & ")</font></LI>" & vbNewLine)
+'#######    Begin UserGroup MOD     #######
+Response.Write    "                <LI><span class=""spnMessageText""><a href=""admin_usergroups.asp"">UserGroups Manager</a></span></LI>" & vbNewLine
+'#######     End UserGroup MOD      #######
+Response.Write    "                <LI><span class=""spnMessageText""><a href=""admin_moderators.asp"">Moderator Setup</a></span></LI>" & vbNewLine & _</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="config.asp">config.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 63 needs to be changed to:<br>
+      <a href="#" onClick="document.getElementById('tar1').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="tar1" rows="1" cols="20">'strConnString = "driver=MySQL;server=SERVER_IP;uid=UID;pwd=PWD;database=DB_NAME;option=16387" '## MySQL</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">'strConnString = "driver={SQL Server};server=SERVER_NAME;uid=UID;pwd=PWD;database=DB_NAME" '## MS SQL Server 6.x/7.x/2000 (ODBC connection)
+'strConnString = "driver=MySQL;server=SERVER_IP;uid=UID;pwd=PWD;database=DB_NAME;option=16387" '## MySQL
+'strConnString = "DSN_NAME" '## DSN</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 127 add:<br>
+      <a href="#" onClick="document.getElementById('ta4').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta4" rows="1" cols="20">Dim strUGView, strUGMemView, strUGModForums        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">Dim SubCount, MySubCount
+Dim strUGView, strUGMemView, strUGModForums        '#######    UserGroup MOD     #######
+
+strCookieURL = Left(Request.ServerVariables("Path_Info"), InstrRev(Request.ServerVariables("Path_Info"), "/"))</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 392 add:<br>
+      <a href="#" onClick="document.getElementById('ta5').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta5" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+strUGView = Application(strCookieURL & "STRUGVIEW")
+strUGMemView = Application(strCookieURL & "STRUGMEMVIEW")
+strUGModForums = Application(strCookieURL & "STRUGMODFORUMS")
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">strShowSmiliesTable = Application(strCookieURL & "STRSHOWSMILIESTABLE")
+strShowQuickReply = Application(strCookieURL & "STRSHOWQUICKREPLY")
+'#######    Begin UserGroup MOD     #######
+strUGView = Application(strCookieURL & "STRUGVIEW")
+strUGMemView = Application(strCookieURL & "STRUGMEMVIEW")
+strUGModForums = Application(strCookieURL & "STRUGMODFORUMS")
+'#######     End UserGroup MOD      #######
+
+if strSecureAdmin = "0" then
+    Session(strCookieURL & "Approval") = "15916941253"
+end if</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="forum.asp">forum.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 168 add:<br>
+      <a href="#" onClick="document.getElementById('ta31').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta31" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+if strPrivateForums <> "1" and (strMethodType <> "login") and (strMethodType <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">if strPrivateForums = "1" and (strMethodType <> "login") and (strMethodType <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+
+'#######    Begin UserGroup MOD     #######
+if strPrivateForums <> "1" and (strMethodType <> "login") and (strMethodType <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+'#######     End UserGroup MOD      #######
+
+if strModeration = "1" and AdminAllowed = 1 then
+	UnModeratedPosts = CheckForUnModeratedPosts("FORUM", Cat_ID, Forum_ID, 0)
+end if
+</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="inc_func_common.asp">inc_func_common.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 1100 <u>delete</u> both the
+      isAllowedMember and OldisAllowedMember functions and <u>insert</u> the
+      following:<br>
+      <a href="#" onClick="document.getElementById('ta6').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta6" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+function chkUserGroupView(ugMemberID)
+    chkUserGroupView = false
+    Select Case CInt(strUGView)
+        Case 0
+            if mlev = 4 then 
+                chkUserGroupView = true
+            else
+                if mlev = 3 and CInt(strUGModForums) > 0 then chkUserGroupView = true
+            end if
+        Case 1
+            if mlev = 4 then
+                chkUserGroupView = true
+            elseif mlev = 3 and CInt(strUGModForums) > 0 then
+                chkUserGroupView = true
+            else
+                strLimitGroups = Session(strCookieURL & "UserGroups" & ugMemberID)
+                if strLimitGroups = "" or IsNull(strLimitGroups) then
+                    chkUserGroupView = false
+                    UG_Err_Msg = "You are not a member of any UserGroups."
+                else
+                    chkUserGroupView = true
+                end if
+            end if
+        Case 2
+            if mlev = 0 then
+                chkUserGroupView = false
+                UG_Err_Msg = "You must be logged in to view UserGroups."
+            else
+                chkUserGroupView = true
+            end if
+    End Select
+end function
+
+function isReadOnly (fForum_ID,fMemberID)
+    if fMemberID <> MemberID then
+        strGroupsForUser = getGroupMembership(fMemberID,1)
+        '## get all read-only groups for this forum
+        strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+            "WHERE FORUM_ID = " & fForum_ID & " AND PERMS = 2"
+        set rsROGroups = Server.CreateObject("ADODB.Recordset")
+        rsROGroups.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+        arROGroups = Null
+        if not rsROGroups.bof and not rsROGroups.eof then arROGroups = rsROGroups.GetRows
+        rsROGroups.close
+        set rsROGroups = nothing
+        isReadOnly = 0
+        if not IsNull(arROGroups) then
+            for ROCount = LBound(arROGroups,2) to UBound(arROGroups,2)
+                if InStr("," & strGroupsForUser & ",", arROGroups(0,ROCount)) then isReadOnly = 1
+            next
+        end if
+        exit function
+    end if
+    if Session(strCookieURL & "ReadOnlyForums" & MemberID) = "" or IsNull(Session(strCookieURL & "ReadOnlyForums" & MemberID)) then
+        '## check group membership
+        strGroupMembership = Session(strCookieURL & "UserGroups" & MemberID)
+        if strGroupMembership <> "" then
+            strSql = "SELECT FORUM_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                "WHERE USERGROUP_ID IN (" & strGroupMembership & ") AND PERMS = 2"
+            set rsROGroup = Server.CreateObject("ADODB.Recordset")
+            rsROGroup.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+            arROGroup = Null
+            if not rsROGroup.bof and not rsROGroup.eof then arROGroup = rsROGroup.GetRows
+            rsROGroup.close
+            set rsROGroup = nothing
+            if not IsNull(arROGroup) then
+                for ROCount = LBound(arROGroup,2) to UBound(arROGroup,2)
+                    if isROMember2 <> "" then isROMember2 = isROMember2 & ","
+                    isROMember2 = isROMember2 & arROGroup(0,ROCount)
+                next
+            end if
+        end if
+
+        if isROMember2 = "" then
+            isROMember2 = "-1"
+        end if
+
+        Session(strCookieURL & "ReadOnlyForums" & MemberID) = isROMember2
+        Session(strCookieURL & "ReadOnlyForums" & MemberID) = isROMember2
+    end if
+    if Session(strCookieURL & "ReadOnlyForums" & MemberID) = "-1" then
+        isReadOnly = 0
+    elseif InStr("," & Session(strCookieURL & "ReadOnlyForums" & MemberID) & ",","," & fForum_ID & ",") then
+        isReadOnly = 1
+    else
+        isReadOnly = 0
+    end if    
+end function
+
+function isDeniedMember (fForum_ID,fMemberID)
+    if fMemberID <> MemberID then
+        strGroupsForUser = getGroupMembership(fMemberID,1)
+        '## get all deny groups for this forum
+        strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+            "WHERE FORUM_ID = " & fForum_ID & " AND PERMS = 1"
+        set rsDeniedGroups = Server.CreateObject("ADODB.Recordset")
+        rsDeniedGroups.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+        arDeniedGroups = Null
+        if not rsDeniedGroups.bof and not rsDeniedGroups.eof then arDeniedGroups = rsDeniedGroups.GetRows
+        rsDeniedGroups.close
+        set rsDeniedGroups = nothing
+        isDeniedMember = 0
+        if not IsNull(arDeniedGroups) then
+            for DenyCount = LBound(arDeniedGroups,2) to UBound(arDeniedGroups,2)
+                if InStr("," & strGroupsForUser & ",", arDeniedGroups(0,DenyCount)) then isDeniedMember = 1
+            next
+        end if
+        exit function
+    end if
+    if Session(strCookieURL & "DeniedForums" & MemberID) = "" or IsNull(Session(strCookieURL & "DeniedForums" & MemberID)) then
+        '## check group membership
+        strGroupMembership = Session(strCookieURL & "UserGroups" & MemberID)
+        if strGroupMembership <> "" then
+            strSql = "SELECT FORUM_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                "WHERE USERGROUP_ID IN (" & strGroupMembership & ") AND PERMS = 1"
+            set rsDeniedGroup = Server.CreateObject("ADODB.Recordset")
+            rsDeniedGroup.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+            arDeniedGroup = Null
+            if not rsDeniedGroup.bof and not rsDeniedGroup.eof then arDeniedGroup = rsDeniedGroup.GetRows
+            rsDeniedGroup.close
+            set rsDeniedGroup = nothing
+            if not IsNull(arDeniedGroup) then
+                for DenyCount = LBound(arDeniedGroup,2) to UBound(arDeniedGroup,2)
+                    if isDeniedMember2 <> "" then isDeniedMember2 = isDeniedMember2 & ","
+                    isDeniedMember2 = isDeniedMember2 & arDeniedGroup(0,DenyCount)
+                next
+            end if
+        end if
+
+        if isDeniedMember2 = "" then
+            isDeniedMember2 = "-1"
+        end if
+
+        Session(strCookieURL & "DeniedForums" & MemberID) = isDeniedMember2
+        Session(strCookieURL & "DeniedForums" & MemberID) = isDeniedMember2
+    end if
+    if Session(strCookieURL & "DeniedForums" & MemberID) = "-1" then
+        isDeniedMember = 0
+    elseif InStr("," & Session(strCookieURL & "DeniedForums" & MemberID) & ",","," & fForum_ID & ",") then
+        isDeniedMember = 1
+    else
+        isDeniedMember = 0
+    end if    
+end function
+
+function isAllowedMember(fForum_ID,fMemberID)
+    if isDeniedMember(fForum_ID,fMemberID) then
+        isAllowedMember = 0
+        exit function
+    end if
+    if fMemberID <> MemberID then
+        isAllowedMember = OldisAllowedMember(fForum_ID,fMemberID)
+        exit function
+    end if
+    if Session(strCookieURL & "AllowedForums" & MemberID) = "" or IsNull(Session(strCookieURL & "AllowedForums" & MemberID)) then
+        '## check first for individual permission
+        strSql = "SELECT FORUM_ID FROM " & strTablePrefix & "ALLOWED_MEMBERS "
+        strSql = strSql & " WHERE MEMBER_ID = " & cLng(fMemberID)
+
+        Set rsAllowedMember = Server.CreateObject("ADODB.Recordset")
+        rsAllowedMember.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+        
+        isAllowedMember2 = ""
+        if not rsAllowedMember.EOF and not rsAllowedMember.BOF then
+            arrAllowedForums = rsAllowedMember.GetRows(adGetRowsRest)
+            For AllowCount = 0 to ubound(arrAllowedForums,2) ' Total Numer of Rows
+                if AllowCount = 0 then
+                    isAllowedMember2 = arrAllowedForums(0,AllowCount)
+                else
+                    isAllowedMember2 = isAllowedMember2 & "," & arrAllowedForums(0,AllowCount)
+                end if
+            next
+        end if
+        rsAllowedMember.close
+        set rsAllowedMember = nothing
+
+        '## check group membership
+        strGroupMembership = Session(strCookieURL & "UserGroups" & MemberID)
+
+        if strGroupMembership <> "" then
+            strSql = "SELECT FORUM_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                "WHERE USERGROUP_ID IN (" & strGroupMembership & ") AND PERMS IN (0,2)"
+            set rsAllowedGroup = Server.CreateObject("ADODB.Recordset")
+            rsAllowedGroup.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+            arAllowedGroup = Null
+            if not rsAllowedGroup.bof and not rsAllowedGroup.eof then arAllowedGroup = rsAllowedGroup.GetRows
+            rsAllowedGroup.close
+            set rsAllowedGroup = nothing
+            if not IsNull(arAllowedGroup) then
+                for AllowCount = LBound(arAllowedGroup,2) to UBound(arAllowedGroup,2)
+                    if isAllowedMember2 <> "" then isAllowedMember2 = isAllowedMember2 & ","
+                    isAllowedMember2 = isAllowedMember2 & arAllowedGroup(0,AllowCount)
+                next
+            end if
+        end if
+
+        if isAllowedMember2 = "" then
+            isAllowedMember2 = "-1"
+        end if
+
+        Session(strCookieURL & "AllowedForums" & MemberID) = isAllowedMember2
+        Session(strCookieURL & "AllowedForums" & MemberID) = isAllowedMember2
+    end if
+
+    if Session(strCookieURL & "AllowedForums" & MemberID) = "-1" then
+        isAllowedMember = 0
+    elseif InStr("," & Session(strCookieURL & "AllowedForums" & MemberID) & ",","," & fForum_ID & ",") then
+        isAllowedMember = 1
+    else
+        isAllowedMember = 0
+    end if    
+end function
+
+function getGroupMembership(intMemberID, intMemberType)
+    '## intMemberID can be either userID or UserGroupID
+    '## intMemberType: 1=user, 2=group
+
+    strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "USERGROUP_USERS " &_
+        "WHERE MEMBER_TYPE = " & intMemberType & " AND MEMBER_ID = " & intMemberID
+    Set rsGroups = Server.CreateObject("ADODB.Recordset")
+    rsGroups.open strSql, my_Conn, adOpenForwardOnly, adLockReadOnly, adCmdText
+    arGroups = Null
+    
+    if not rsGroups.EOF and not rsGroups.BOF then arGroups = rsGroups.GetRows
+    rsGroups.close
+    set rsGroups = Nothing
+
+    if not IsNull(arGroups) then
+        for iGCnt = LBound(arGroups,2) to UBound(arGroups,2)
+            getGroupMembership =  getGroupMembership & arGroups(0,iGCnt) & "," & getGroupMembership(arGroups(0,iGCnt),2)
+        next
+    end if
+    if Right(getGroupMembership,1) = "," then getGroupMembership = Left(getGroupMembership,Len(getGroupMembership)-1)
+end function
+
+function getUserGroupName(fUserGroupID)
+
+    if isNull(fUserGroupID) then 
+        getUserGroupName = "UserGroup name not found"
+        exit function
+    end if
+    strSql = "SELECT USERGROUP_NAME "
+    strSql = strSql & " FROM " & strTablePrefix & "USERGROUPS "
+    strSql = strSql & " WHERE USERGROUP_ID = " & ChkString(fUserGroupID, "SQLString")
+
+    Set rsGetName = Server.CreateObject("ADODB.Recordset")
+    rsGetName.open strSql, my_Conn
+
+    if rsGetName.EOF or rsGetName.BOF then
+        getUserGroupName = ""
+    else
+        getUserGroupName = rsGetName("USERGROUP_NAME")
+    end if
+
+    rsGetName.close
+    set rsGetName = nothing
+
+end function
+
+
+function OldisAllowedMember(fForum_ID,fMemberID)
+    OldisAllowedMember = 0
+    if isDeniedMember(fForum_ID, fMemberID) then exit function
+    strSql = "SELECT MEMBER_ID, FORUM_ID FROM " & strTablePrefix & "ALLOWED_MEMBERS "
+    strSql = strSql & " WHERE FORUM_ID = " & cLng(fForum_ID)
+    strSql = strSql & " AND MEMBER_ID = " & cLng(fMemberID)
+
+    Set rsAllowedMember = Server.CreateObject("ADODB.Recordset")
+    rsAllowedMember.open strSql, my_Conn
+    blnAM = 0
+    if not rsAllowedMember.bof and not rsAllowedMember.eof then blnAM = 1
+    rsAllowedMember.close
+    set rsAllowedMember = nothing
+
+    '## if the member exists as an allowed member for the forum then return value 1
+    if blnAm = 1 then
+        OldisAllowedMember = 1
+    else
+
+        '## check for usergroup membership
+        strGroupsForUser = getGroupMembership(fMemberID,1)
+        if strGroupsForUser <> "" then
+            '## check to see if the user's groups are a part of this forum
+            strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "ALLOWED_USERGROUPS "
+            strSql = strSql & "WHERE FORUM_ID = " & fForum_ID
+            strSql = strSql & " AND PERMS IN (0,2)"
+			'strSql = strSql & " AND PERMS = 0"
+            set rsAllowedUserGroups = my_Conn.execute(strSql)
+    
+            blnAllowed = 0
+            Do While Not rsAllowedUserGroups.eof And OldisAllowedMember <> 1
+                intUserGroupID = rsAllowedUserGroups("USERGROUP_ID")
+                if InStr("," & strGroupsForUser & ",", "," & intUserGroupID & ",") then OldisAllowedMember = 1
+                rsAllowedUserGroups.movenext
+            Loop
+            rsAllowedUserGroups.close
+            set rsAllowedUserGroups = nothing
+        end if
+    end if
+end function
+
+'#######    End UserGroup MOD     #######</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="inc_func_secure.asp">inc_func_secure.asp</a></b></p>
+<table border="0" width="100%">
+  <tr><td colspan="2">------<br>If you are using an older version, and this function is present:</td></tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 103 add:<br>
+ (in the chkForumDisplay function)<br>
+      <a href="#" onClick="document.getElementById('ta30').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta30" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+        if isDeniedMember(fForum_ID, UserNum) = 1 then
+            chkDisplayForum = false
+            exit function
+        end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">    if (mLev = 4) or (mLev = 3 and ModerateAllowed = "Y") then
+        chkDisplayForum = true
+        exit function
+    end if
+
+'#######    Begin UserGroup MOD     #######
+        if isDeniedMember(fForum_ID, UserNum) = 1 then
+            chkDisplayForum = false
+            exit function
+        end if
+'#######     End UserGroup MOD      #######
+
+    select case cLng(fPrivateForums)</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">------<br>approximately line 171 add:<br>
+ (in the chkForumAccess function)<br>
+      <a href="#" onClick="document.getElementById('ta7').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta7" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+        if isDeniedMember(fForum, UserNum) = 1 then
+            chkForumAccess = false
+            if Display then
+                doNotAllowed
+                response.end
+            end if
+            exit function
+        end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top"><br>this and surrounding code looks like:<br><br>
+      <br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">    if rsStatus.EOF or rsStatus.BOF then
+        rsStatus.close
+        set rsStatus = nothing
+        Response.Redirect("default.asp")
+    else
+
+'#######    Begin UserGroup Access Mod     #######
+        if isDeniedMember(fForum, UserNum) = 1 then
+            chkForumAccess = false
+            if Display then
+                doNotAllowed
+                response.end
+            end if
+            exit function
+        end if
+'#######    End UserGroup Access Mod     #######
+
+        dim Users
+        dim MatchFound</textarea></td>
+  </tr>
+  <tr><td colspan="2">------<br>If you are using a newer version, and this function is present, this should also be done.</td></tr>
+  <tr>
+    <td width="50%" valign="top">approx. line ??? Add<br>
+ (in the chkForumAccessNew function)<br>
+      <a href="#" onClick="document.getElementById('ta7').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta7" rows="1" cols="20">'####### Begin UserGroup MOD #######
+        if isDeniedMember(fForum_ID, UserNum) = 1 then
+            chkForumAccessNew = false
+            exit function
+        end if
+'####### End UserGroup MOD #######</textarea><br>------</td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">function chkForumAccessNew(fPrivateForums,fFPasswordNew,fForum_Subject,fForum_ID,UserNum)
+        if MemberID = UserNum then
+            if mLev < 1 then
+                chkForumAccessNew = false
+            elseif mLev = 3 then
+                chkForumAccessNew = true
+            elseif mLev = 4 then
+                chkForumAccessNew = true
+                exit function
+            end if
+        end if
+        '####### Begin UserGroup MOD #######
+        if isDeniedMember(fForum_ID, UserNum) = 1 then
+            chkForumAccessNew = false
+            exit function
+        end if
+        '####### End UserGroup MOD #######
+        dim Users
+        dim MatchFound</textarea><br></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="inc_header.asp">inc_header.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 227 add:<br>
+      <a href="#" onClick="document.getElementById('ta8').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta8" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+if Session(strCookieURL & "UserGroups" & MemberID) = "" or _
+    IsNull(Session(strCookieURL & "UserGroups" & MemberID)) then
+    strGroupMembership = getGroupMembership(MemberID,1)
+    Session(strCookieURL & "UserGroups" & MemberID) = strGroupMembership
+    Session(strCookieURL & "UserGroups" & MemberID) = strGroupMembership
+end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">    if not rs.EOF then
+        User_Count = cLng(rs("U_COUNT"))
+    else
+        User_Count = 0
+    end if
+
+    rs.close
+    set rs = nothing
+end if
+
+'#######    Begin UserGroup Access Mod     #######
+if Session(strCookieURL & "UserGroups" & MemberID) = "" or _
+    IsNull(Session(strCookieURL & "UserGroups" & MemberID)) then
+    strGroupMembership = getGroupMembership(MemberID,1)
+    Session(strCookieURL & "UserGroups" & MemberID) = strGroupMembership
+    Session(strCookieURL & "UserGroups" & MemberID) = strGroupMembership
+end if
+'#######     End UserGroup Access Mod      #######
+
+Response.Write    "<html>" & vbNewline & vbNewline & _
+        "<head>" & vbNewline & _
+        "<title>" & GetNewTitle(strScriptName) & "</title>" & vbNewline</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 509 add:<br>
+      <a href="#" onClick="document.getElementById('ta9').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta9" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+    blnCanView = ""
+    blnCanView = chkUserGroupView(MemberID)
+    if blnCanView = true then
+        Response.Write    "          |" & vbNewline &_
+                "          <a href=""usergroups.asp""" & dWStatus("View UserGroup Information") & " tabindex=""-1""><acronym title=""View UserGroup Information"">UserGroups</acronym></a>" & vbNewline
+    end if    
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">    ' DEM --> End of Code added to show subscriptions if they exist
+'#######    Begin UserGroup Access Mod     #######
+    blnCanView = ""
+    blnCanView = chkUserGroupView(MemberID)
+    if blnCanView = true then
+        Response.Write    "          |" & vbNewline &_
+                "          <a href=""usergroups.asp""" & dWStatus("View UserGroup Information") & " tabindex=""-1""><acronym title=""View UserGroup Information"">UserGroups</acronym></a>" & vbNewline
+    end if    
+'#######     End UserGroup Access Mod      #######
+    Response.Write    "          |" & vbNewline & _
+            "          <a href=""members.asp""" & dWStatus("Current members of these forums...") & " tabindex=""-1""><acronym title=""Current members of these forums..."">Members</acronym></a>" & vbNewline & _
+            "          |" & vbNewline &_
+            "          <a href=""search.asp"</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="inc_profile.asp">inc_profile.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 477 add:<br>
+      <a href="#" onClick="document.getElementById('ta10').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta10" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+    if mLev = 4 and strMode <> "Register" then
+        strSql = "SELECT U.USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS U, " &_
+            strTablePrefix & "USERGROUP_USERS UM " &_
+            "WHERE U.USERGROUP_ID = UM.USERGROUP_ID " &_
+            "AND UM.MEMBER_TYPE = 1 " &_
+            "AND UM.MEMBER_ID = " & rs("MEMBER_ID") & " " &_
+            "ORDER BY U.USERGROUP_NAME"
+        set rsPPGroups = my_Conn.execute(strSql)
+        arPPGroups = Null
+        if not rsPPGroups.bof and not rsPPGroups.eof then arPPGroups = rsPPGroups.GetRows
+        rsPPGroups.close
+        set rsPPGroups = Nothing
+        strPPGroups = ""
+        if not IsNull(arPPGroups) then
+            for iPPGcount = LBound(arPPGroups,2) to UBound(arPPGroups,2)
+                if strPPGroups <> "" then strPPGroups = strPPGroups & ","
+                strPPGroups = strPPGroups & arPPGroups(0,iPPGcount)
+            next
+        end if
+        strSql = "SELECT USERGROUP_ID, USERGROUP_NAME FROM " & strTablePrefix & "USERGROUPS ORDER BY USERGROUP_NAME"
+        set rsAllGroups = my_Conn.execute(strSql)
+        arAllGroups = Null
+        if not rsAllGroups.bof and not rsAllGroups.eof then arAllGroups = rsAllGroups.GetRows
+        rsAllGroups.close
+        set rsAllGroups = Nothing
+        Response.Write    "                    <tr>" & vbNewLine & _
+                "                      <td valign=""top"" align=""center"" colspan=""2"" bgcolor=""" & strCategoryCellColor & """><b><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """ color=""" & strCategoryFontColor & """>UserGroups</font></b></td>" & vbNewLine & _
+                "                    </tr>" & vbNewLine
+        if IsNull(arAllGroups) then
+            Response.Write    "                    <tr>" & vbNewLine & _
+                    "                      <td colspan=""2"" bgColor=""" & strPopUpTableColor & """><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>no usergroups found</font></td>" & vbNewLine &_
+                    "                    </tr>" & vbNewLine
+        else
+            for iGcount = LBound(arAllGroups,2) to UBound(arAllGroups,2)
+                Response.Write    "                    <tr>" & vbNewLine & _
+                        "                      <td align=""right"" bgColor=""" & strPopUpTableColor & """><input type=""checkbox"" name=""UserGroups"" value=""" & arAllGroups(0,iGcount) & """"
+                if InStr("," & strPPGroups & ",", ",","," & arAllGroups(0,iGcount) & ",") then response.write " checked"
+                Response.Write    "></td>" & vbNewLine &_
+                        "<td bgColor=""" & strPopUpTableColor & """><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>" & chkString(arAllGroups(1,iGcount),"display") & "</font></td>" & vbNewline &_
+                        "                    </tr>" & vbNewLine
+            next
+        end if
+    end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off" class="result" rows="1" cols="20" name="result">            if rs("M_LEVEL") = 3 then Response.Write(" selected")
+            Response.Write    ">Administrator</option>" & vbNewLine & _
+                    "                      </select>" & vbNewLine
+        end if
+        Response.Write    "                      </td>" & vbNewLine & _
+                "                    </tr>" & vbNewLine
+    end if
+'#######    Begin UserGroup Mod     #######
+    if mLev = 4 and strMode <> "Register" then
+        strSql = "SELECT U.USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS U, " &_
+            strTablePrefix & "USERGROUP_USERS UM " &_
+            "WHERE U.USERGROUP_ID = UM.USERGROUP_ID " &_
+            "AND UM.MEMBER_TYPE = 1 " &_
+            "AND UM.MEMBER_ID = " & rs("MEMBER_ID") & " " &_
+            "ORDER BY U.USERGROUP_NAME"
+        set rsPPGroups = my_Conn.execute(strSql)
+        arPPGroups = Null
+        if not rsPPGroups.bof and not rsPPGroups.eof then arPPGroups = rsPPGroups.GetRows
+        rsPPGroups.close
+        set rsPPGroups = Nothing
+        strPPGroups = ""
+        if not IsNull(arPPGroups) then
+            for iPPGcount = LBound(arPPGroups,2) to UBound(arPPGroups,2)
+                if strPPGroups <> "" then strPPGroups = strPPGroups & ","
+                strPPGroups = strPPGroups & arPPGroups(0,iPPGcount)
+            next
+        end if
+        strSql = "SELECT USERGROUP_ID, USERGROUP_NAME FROM " & strTablePrefix & "USERGROUPS ORDER BY USERGROUP_NAME"
+        set rsAllGroups = my_Conn.execute(strSql)
+        arAllGroups = Null
+        if not rsAllGroups.bof and not rsAllGroups.eof then arAllGroups = rsAllGroups.GetRows
+        rsAllGroups.close
+        set rsAllGroups = Nothing
+        Response.Write    "                    <tr>" & vbNewLine & _
+                "                      <td valign=""top"" align=""center"" colspan=""2"" bgcolor=""" & strCategoryCellColor & """><b><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """ color=""" & strCategoryFontColor & """>UserGroups</font></b></td>" & vbNewLine & _
+                "                    </tr>" & vbNewLine
+        if IsNull(arAllGroups) then
+            Response.Write    "                    <tr>" & vbNewLine & _
+                    "                      <td colspan=""2"" bgColor=""" & strPopUpTableColor & """><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>no usergroups found</font></td>" & vbNewLine &_
+                    "                    </tr>" & vbNewLine
+        else
+            for iGcount = LBound(arAllGroups,2) to UBound(arAllGroups,2)
+                Response.Write    "                    <tr>" & vbNewLine & _
+                        "                      <td align=""right"" bgColor=""" & strPopUpTableColor & """><input type=""checkbox"" name=""UserGroups"" value=""" & arAllGroups(0,iGcount) & """"
+                if InStr("," & strPPGroups & ",", ",","," & arAllGroups(0,iGcount) & ",") then response.write " checked"
+                Response.Write    "></td>" & vbNewLine &_
+                        "<td bgColor=""" & strPopUpTableColor & """><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>" & chkString(arAllGroups(1,iGcount),"display") & "</font></td>" & vbNewline &_
+                        "                    </tr>" & vbNewLine
+            next
+        end if
+    end if
+'#######     End UserGroup Mod      #######
+    if not(strUseExtendedProfile) then
+        Response.Write    "                    <tr>" & vbNewLine & _
+                "                      <td align=""center"" bgcolor=""" & strCategoryCellColor & """ colspan=""2""><b><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """ color=""" & strCategoryFontColor & """>&nbsp;Contact Info&nbsp;</font></b></td>" & vbNewLine & _</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="pop_delete.asp">pop_delete.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 356 add:<br>
+      <a href="#" onClick="document.getElementById('ta27').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta27" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+                    '## Forum_SQL - Delete the Allowed UserGroups of this forum
+                    strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS "
+                    strSql = strSql & " WHERE FORUM_ID = " & cLng(delAr(i))
+                    my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">                    '## Forum_SQL - Delete the Allowed Members of this forum
+                    strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_MEMBERS "
+                    strSql = strSql & " WHERE FORUM_ID = " & cLng(delAr(i))
+                    my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+
+'#######    Begin UserGroup MOD     #######
+                    '## Forum_SQL - Delete the Allowed UserGroups of this forum
+                    strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS "
+                    strSql = strSql & " WHERE FORUM_ID = " & cLng(delAr(i))
+                    my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+'#######     End UserGroup MOD      #######
+
+                    '## Forum_SQL - Delete all subscriptions to this forum</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 477 add:<br>
+      <a href="#" onClick="document.getElementById('ta28').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta28" rows="1" cols="20">                            my_Conn.Execute ("DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS WHERE FORUM_ID = " & cLng(rs("FORUM_ID"))),,adCmdText + adExecuteNoRecords        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">                            my_Conn.Execute ("DELETE FROM " & strTablePrefix & "ALLOWED_MEMBERS WHERE FORUM_ID = " & cLng(rs("FORUM_ID"))),,adCmdText + adExecuteNoRecords
+                            my_Conn.Execute ("DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS WHERE FORUM_ID = " & cLng(rs("FORUM_ID"))),,adCmdText + adExecuteNoRecords        '#######    UserGroup MOD     #######
+                            rs.movenext</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 595 add:<br>
+      <a href="#" onClick="document.getElementById('ta29').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta29" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+                        '## Forum_SQL - Remove the member from the UserGroup Members table
+                        strSql = "DELETE FROM " & strTablePrefix & "USERGROUP_USERS "
+                        strSql = strSql & " WHERE MEMBER_ID = " & cLng(delAr(i)) & " AND MEMBER_TYPE = 1"
+                        my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">                        '## Forum_SQL - Remove the member from the Allowed Members table
+                        strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_MEMBERS "
+                        strSql = strSql & " WHERE MEMBER_ID = " & cLng(delAr(i))
+                        my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+
+'#######    Begin UserGroup MOD     #######
+                        '## Forum_SQL - Remove the member from the UserGroup Members table
+                        strSql = "DELETE FROM " & strTablePrefix & "USERGROUP_USERS "
+                        strSql = strSql & " WHERE MEMBER_ID = " & cLng(delAr(i)) & " AND MEMBER_TYPE = 1"
+                        my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+'#######     End UserGroup MOD      #######
+
+                        '## Forum_SQL - Select postcount</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="pop_profile.asp">pop_profile.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 709 add:<br>
+      <a href="#" onClick="document.getElementById('ta11').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta11" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+            if mlev = 4 or (mlev = 3 and CInt(strUGModForums) > 0 ) or (mlev > 0 and CInt(strUGMemView) = 2) or (ppMember_ID = MemberID and CInt(strUGMemView) > 0) then
+                strSql = "SELECT U.USERGROUP_NAME, U.MEM_HIDE FROM " & strTablePrefix & "USERGROUPS U, " &_
+                    strTablePrefix & "USERGROUP_USERS UM " &_
+                    "WHERE U.USERGROUP_ID = UM.USERGROUP_ID " &_
+                    "AND UM.MEMBER_TYPE = 1 " &_
+                    "AND UM.MEMBER_ID = " & ppMember_ID & " " &_
+                    "ORDER BY U.USERGROUP_NAME"
+                set rsPPGroups = my_Conn.execute(strSql)
+                arPPGroups = Null
+                if not rsPPGroups.bof and not rsPPGroups.eof then arPPGroups = rsPPGroups.GetRows
+                rsPPGroups.close
+                set rsPPGroups = Nothing
+                strPPGroups = ""
+                if not IsNull(arPPGroups) then
+                    for iPPGcount = LBound(arPPGroups,2) to UBound(arPPGroups,2)
+                        if (arPPGroups(1,iPPGcount) = 0 or mlev = 4) then
+                            if strPPGroups <> "" then strPPGroups = strPPGroups & ", "
+                            strPPGroups = strPPGroups & arPPGroups(0,iPPGcount)
+                        end if
+                    next
+                end if
+                Response.Write    "                    <tr>" & vbNewLine & _
+                        "                      <td valign=""top"" align=""center"" colspan=""2"" bgcolor=""" & strCategoryCellColor & """><b><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """ color=""" & strCategoryFontColor & """>UserGroups</font></b></td>" & vbNewLine & _
+                        "                    </tr>" & vbNewLine & _
+                        "                    <tr>" & vbNewLine & _
+                        "                      <td colspan=""2"" bgColor=""" & strPopUpTableColor & """><table><tr>"
+                if CInt(strUGView) > 0 then response.write "<td><a href=""usergroups.asp?mode=ViewGroups"" alt=""View UserGroups"">" & getCurrentIcon(strIconGroup,"View UserGroups","hspace=""0""") & "</a></td>"
+                Response.Write    "                <td><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>"
+                if strPPGroups = "" then
+                    Response.Write    "no usergroups found"
+                else
+                    Response.Write    ChkString(strPPGroups,"display")
+                end if
+                Response.Write    "                </font></td>" & vbNewline &_
+                        "            </tr></table></td>" & vbNewLine & _
+                        "                    </tr>" & vbNewLine
+            end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">                    else
+                        Response.Write    "                      <td bgColor=""" & strPopUpTableColor & """><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>No link specified...</font></td>" & vbNewLine
+                    end if 
+                    Response.Write    "                    </tr>" & vbNewLine
+                end if
+            end if
+'#######    Begin UserGroup Mod     #######
+            if mlev = 4 or (mlev = 3 and CInt(strUGModForums) > 0 ) or (mlev > 0 and CInt(strUGMemView) = 2) or (ppMember_ID = MemberID and CInt(strUGMemView) > 0) then
+                strSql = "SELECT U.USERGROUP_NAME, U.MEM_HIDE FROM " & strTablePrefix & "USERGROUPS U, " &_
+                    strTablePrefix & "USERGROUP_USERS UM " &_
+                    "WHERE U.USERGROUP_ID = UM.USERGROUP_ID " &_
+                    "AND UM.MEMBER_TYPE = 1 " &_
+                    "AND UM.MEMBER_ID = " & ppMember_ID & " " &_
+                    "ORDER BY U.USERGROUP_NAME"
+                set rsPPGroups = my_Conn.execute(strSql)
+                arPPGroups = Null
+                if not rsPPGroups.bof and not rsPPGroups.eof then arPPGroups = rsPPGroups.GetRows
+                rsPPGroups.close
+                set rsPPGroups = Nothing
+                strPPGroups = ""
+                if not IsNull(arPPGroups) then
+                    for iPPGcount = LBound(arPPGroups,2) to UBound(arPPGroups,2)
+                        if (arPPGroups(1,iPPGcount) = 0 or mlev = 4) then
+                            if strPPGroups <> "" then strPPGroups = strPPGroups & ", "
+                            strPPGroups = strPPGroups & arPPGroups(0,iPPGcount)
+                        end if
+                    next
+                end if
+                Response.Write    "                    <tr>" & vbNewLine & _
+                        "                      <td valign=""top"" align=""center"" colspan=""2"" bgcolor=""" & strCategoryCellColor & """><b><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """ color=""" & strCategoryFontColor & """>UserGroups</font></b></td>" & vbNewLine & _
+                        "                    </tr>" & vbNewLine & _
+                        "                    <tr>" & vbNewLine & _
+                        "                      <td colspan=""2"" bgColor=""" & strPopUpTableColor & """><table><tr>"
+                if CInt(strUGView) > 0 then response.write "<td><a href=""usergroups.asp?mode=ViewGroups"" alt=""View UserGroups"">" & getCurrentIcon(strIconGroup,"View UserGroups","hspace=""0""") & "</a></td>"
+                Response.Write    "                <td><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>"
+                if strPPGroups = "" then
+                    Response.Write    "no usergroups found"
+                else
+                    Response.Write    ChkString(strPPGroups,"display")
+                end if
+                Response.Write    "                </font></td>" & vbNewline &_
+                        "            </tr></table></td>" & vbNewLine & _
+                        "                    </tr>" & vbNewLine
+            end if
+'#######     End UserGroup Mod      #######
+            Response.Write    "                  </table>" & vbNewLine & _
+                    "                </td>" & vbNewLine & _
+                    "              </tr>" & vbNewLine & _</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1592 add:<br>
+      <a href="#" onClick="document.getElementById('ta12').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta12" rows="1" cols="20">'#######    Begin UserGroup Mod     #######
+                    '## delete member from existing groups
+                    strSql = "DELETE FROM " & strTablePrefix & "USERGROUP_USERS " &_
+                        "WHERE MEMBER_TYPE = 1 AND MEMBER_ID = " & cLng(Request.Form("MEMBER_ID"))
+                    my_Conn.Execute(strSql)
+                    '## add member to new groups
+                    strGroups = Request.Form("UserGroups")
+                    if strGroups <> "" or not IsEmpty(strGroups) or not IsNull(strGroups) then
+                        arAddGroups = Split(strGroups,",")
+                        for iAGcount = LBound(arAddGroups) to UBound(arAddGroups)
+                            strSql = "INSERT INTO " & strTablePrefix & "USERGROUP_USERS " &_
+                                "(USERGROUP_ID, MEMBER_TYPE, MEMBER_ID) VALUES " &_
+                                "(" & cLng(Trim(arAddGroups(iAGcount))) & ", 1, " & cLng(Request.Form("MEMBER_ID")) & ")"
+                            my_Conn.Execute(strSql)
+                        next
+                    end if
+'#######     End UserGroup Mod      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">                    if ChkString(Request.Form("Level"),"") = "1" then 
+                        '## Forum_SQL - Remove the member from the moderator table
+                        strSql = "DELETE FROM " & strTablePrefix & "MODERATOR "
+                        strSql = strSql & " WHERE " & strTablePrefix & "MODERATOR.MEMBER_ID = " & cLng(Request.Form("MEMBER_ID"))
+
+                        my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords
+                    end if
+
+'#######    Begin UserGroup Mod     #######
+                    '## delete member from existing groups
+                    strSql = "DELETE FROM " & strTablePrefix & "USERGROUP_USERS " &_
+                        "WHERE MEMBER_TYPE = 1 AND MEMBER_ID = " & cLng(Request.Form("MEMBER_ID"))
+                    my_Conn.Execute(strSql)
+                    '## add member to new groups
+                    strGroups = Request.Form("UserGroups")
+                    if strGroups <> "" or not IsEmpty(strGroups) or not IsNull(strGroups) then
+                        arAddGroups = Split(strGroups,",")
+                        for iAGcount = LBound(arAddGroups) to UBound(arAddGroups)
+                            strSql = "INSERT INTO " & strTablePrefix & "USERGROUP_USERS " &_
+                                "(USERGROUP_ID, MEMBER_TYPE, MEMBER_ID) VALUES " &_
+                                "(" & cLng(Trim(arAddGroups(iAGcount))) & ", 1, " & cLng(Request.Form("MEMBER_ID")) & ")"
+                            my_Conn.Execute(strSql)
+                        next
+                    end if
+'#######     End UserGroup Mod      #######
+
+                    Response.Write    "    <p align=""center""><font face=""" & strDefaultFontFace & """ size=""" & strHeaderFontSize & """>Profile Updated.</font></p>" & vbNewLine</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="post.asp">post.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 243 add:<br>
+      <a href="#" onClick="document.getElementById('ta13').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta13" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+    if isDeniedMember(strRqForumID,MemberID) = 1 then
+        Go_Result "You have been denied access to this forum"
+    end if
+    if isReadOnly(strRqForumID,MemberID) = 1 then
+        Go_Result "Your access to this forum is read-only"
+    end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">        case "Edit"
+            if ((blnCStatus = 0) or (blnFStatus = 0) or (blnTStatus = 0)) and (AdminAllowed = 0) then
+                Go_Result "You have attempted to Edit a Reply to a Locked Topic"
+            end if
+    end select
+'#######    Begin UserGroup MOD     #######
+    if isDeniedMember(strRqForumID,MemberID) = 1 then
+        Go_Result "You have been denied access to this forum"
+    end if
+    if isReadOnly(strRqForumID,MemberID) = 1 then
+        Go_Result "Your access to this forum is read-only"
+    end if
+'#######     End UserGroup MOD      #######
+    if strPrivateForums = "1" and ForumChkSkipAllowed = 0 then
+        if not(chkForumAccess(strRqForumID,MemberID,false)) then
+                Go_Result "You do not have access to this forum"
+          end if
+    end if</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1310 add:<br>
+      <a href="#" onClick="document.getElementById('ta14').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta14" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+if strRqMethod = "Forum" or strRqMethod = "URL" or strRqMethod = "EditURL" or strRqMethod = "EditForum" then
+if mlev = 4 or (mlev = 3 and CInt(strUGModForums) > 0) then
+    Response.Write    "        <tr>" & vbNewLine & _
+            "            <td bgColor=""" & strPopUpTableColor & """ noWrap vAlign=""top"" align=""right""><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """><b>UserGroup Permissions:</b></font></td>" & vbNewLine &_
+            "            <td bgColor=""" & strPopUpTableColor  & """ noWrap align=""left"">" & vbNewLine &_
+            "                <table width=""100%"">" & vbNewLine &_
+            "                    <tr><td colspan=""2""><font size=""" & strDefaultFontSize & """><b>UserGroup</b></font></td><td align=""right""><font size=""" & strDefaultFontSize & """><b>Permissions</b></font></td></tr>" & vbNewLine
+    strSql = "SELECT USERGROUP_ID, USERGROUP_NAME, MOD_HIDE "
+    strSql = strSql & " FROM " & strTablePrefix & "USERGROUPS "
+    strSql = strSql & " ORDER BY USERGROUP_NAME "
+    set rsUGs = my_Conn.execute(strSql)
+    arUGs = Null
+    if not rsUGs.bof and not rsUGs.eof then arUGs = rsUGs.GetRows
+    rsUGs.close
+    set rsUGs = Nothing
+    
+    if not IsNull(arUGs) then
+        for UGCnt = LBound(arUGs,2) to UBound(arUGs,2)
+        if (arUGs(2,UGCnt) = 0 and mlev = 3) or mlev = 4 then
+            strPerms = Null
+            if strRqMethod = "EditURL" or strRqMethod = "EditForum" then
+                strSql = "SELECT PERMS FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                    "WHERE FORUM_ID = " & strRqForumID & " AND USERGROUP_ID = " & arUGs(0,UGCnt)
+                set rsPerms = my_Conn.execute(strSql)
+                if not rsPerms.bof and not rsPerms.eof then strPerms = rsPerms("PERMS")
+                rsPerms.close
+                set rsPerms = Nothing
+            end if
+            response.write    "                    <tr>" & vbNewline &_
+                    "                        <td width=""10"">" & vbNewline &_
+                    "                            <a href=""usergroups.asp?mode=ViewUsers&ID=" & arUGs(0,UGCnt) & """>" & getCurrentIcon(strIconGroup,"View UserGroup Members","hspace=""0""") & "</a>" & vbNewline
+            if mlev = 4 then response.write "                            <a href=""admin_usergroups.asp?mode=Modify&ID=" & arUGs(0,UGCnt) & """>" & getCurrentIcon(strIconPencil,"Edit UserGroup Properties","hspace=""0""") & "</a>" & vbNewline
+            response.write    "                        </td>" & vbNewline &_
+                    "                        <td><font size=""" & strDefaultFontSize & """>" & chkString(arUGs(1,UGCnt),"display") & "</font></td>" & vbNewline &_
+                    "                        <td align=""right""><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>"
+
+            if CInt(strUGModForums) = 1 and mlev = 3 then
+                Select Case strPerms
+                    Case 0 strPermsDesc = "Allow"
+                    Case 1 strPermsDesc = "Deny"
+                    Case 2 strPermsDesc = "Read-Only"
+                    Case Else strPermsDesc = "Not Set"
+                End Select
+                response.write strPermsDesc
+            else
+                response.write    "<select name=""Perms" & arUGs(0,UGCnt) & """>" & vbNewline &_
+                        "                            <option value=""notset""" & chkSelect(strPerms,Null) & ">Do Not Set</option>" & vbNewline
+                if (ForumAuthType = 1 or ForumAuthType = 6 or ForumAuthType = 3) then response.write    "                            <option value=""0""" & chkSelect(strPerms,0) & ">Allow</option>" & vbNewline
+                response.write    "                            <option value=""2""" & chkSelect(strPerms,2) & ">Read-Only</option>" & vbNewline &_
+                        "                            <option value=""1""" & chkSelect(strPerms,1) & ">Deny</option>" & vbNewline &_
+                        "                        </select>"
+
+            end if
+            response.write    "</font></td>" & vbNewline &_
+                    "                    </tr>" & vbNewline
+        end if
+        next
+    else
+        response.write    "                    <tr><td colspan=""3""><font size=""" & strDefaultFontSize & """>No usergroups were found.</font></td></tr>" & vbNewline
+    end if
+
+    response.write    "                </table>" & vbNewline &_
+            "            </td>" & vbNewline &_
+            "        </tr>" & vbNewline
+end if
+end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">        '#####################################
+        '## Allowed User - End of listbox code
+        '#####################################
+    end if
+end if 
+
+'#######    Begin UserGroup MOD     #######
+if strRqMethod = "Forum" or strRqMethod = "URL" or strRqMethod = "EditURL" or strRqMethod = "EditForum" then
+if mlev = 4 or (mlev = 3 and CInt(strUGModForums) > 0) then
+    Response.Write    "        <tr>" & vbNewLine & _
+            "            <td bgColor=""" & strPopUpTableColor & """ noWrap vAlign=""top"" align=""right""><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """><b>UserGroup Permissions:</b></font></td>" & vbNewLine &_
+            "            <td bgColor=""" & strPopUpTableColor  & """ noWrap align=""left"">" & vbNewLine &_
+            "                <table width=""100%"">" & vbNewLine &_
+            "                    <tr><td colspan=""2""><font size=""" & strDefaultFontSize & """><b>UserGroup</b></font></td><td align=""right""><font size=""" & strDefaultFontSize & """><b>Permissions</b></font></td></tr>" & vbNewLine
+    strSql = "SELECT USERGROUP_ID, USERGROUP_NAME, MOD_HIDE "
+    strSql = strSql & " FROM " & strTablePrefix & "USERGROUPS "
+    strSql = strSql & " ORDER BY USERGROUP_NAME "
+    set rsUGs = my_Conn.execute(strSql)
+    arUGs = Null
+    if not rsUGs.bof and not rsUGs.eof then arUGs = rsUGs.GetRows
+    rsUGs.close
+    set rsUGs = Nothing
+    
+    if not IsNull(arUGs) then
+        for UGCnt = LBound(arUGs,2) to UBound(arUGs,2)
+        if (arUGs(2,UGCnt) = 0 and mlev = 3) or mlev = 4 then
+            strPerms = Null
+            if strRqMethod = "EditURL" or strRqMethod = "EditForum" then
+                strSql = "SELECT PERMS FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                    "WHERE FORUM_ID = " & strRqForumID & " AND USERGROUP_ID = " & arUGs(0,UGCnt)
+                set rsPerms = my_Conn.execute(strSql)
+                if not rsPerms.bof and not rsPerms.eof then strPerms = rsPerms("PERMS")
+                rsPerms.close
+                set rsPerms = Nothing
+            end if
+            response.write    "                    <tr>" & vbNewline &_
+                    "                        <td width=""10"">" & vbNewline &_
+                    "                            <a href=""usergroups.asp?mode=ViewUsers&ID=" & arUGs(0,UGCnt) & """>" & getCurrentIcon(strIconGroup,"View UserGroup Members","hspace=""0""") & "</a>" & vbNewline
+            if mlev = 4 then response.write "                            <a href=""admin_usergroups.asp?mode=Modify&ID=" & arUGs(0,UGCnt) & """>" & getCurrentIcon(strIconPencil,"Edit UserGroup Properties","hspace=""0""") & "</a>" & vbNewline
+            response.write    "                        </td>" & vbNewline &_
+                    "                        <td><font size=""" & strDefaultFontSize & """>" & chkString(arUGs(1,UGCnt),"display") & "</font></td>" & vbNewline &_
+                    "                        <td align=""right""><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>"
+
+            if CInt(strUGModForums) = 1 and mlev = 3 then
+                Select Case strPerms
+                    Case 0 strPermsDesc = "Allow"
+                    Case 1 strPermsDesc = "Deny"
+                    Case 2 strPermsDesc = "Read-Only"
+                    Case Else strPermsDesc = "Not Set"
+                End Select
+                response.write strPermsDesc
+            else
+                response.write    "<select name=""Perms" & arUGs(0,UGCnt) & """>" & vbNewline &_
+                        "                            <option value=""notset""" & chkSelect(strPerms,Null) & ">Do Not Set</option>" & vbNewline
+                if (ForumAuthType = 1 or ForumAuthType = 6 or ForumAuthType = 3) then response.write    "                            <option value=""0""" & chkSelect(strPerms,0) & ">Allow</option>" & vbNewline
+                response.write    "                            <option value=""2""" & chkSelect(strPerms,2) & ">Read-Only</option>" & vbNewline &_
+                        "                            <option value=""1""" & chkSelect(strPerms,1) & ">Deny</option>" & vbNewline &_
+                        "                        </select>"
+
+            end if
+            response.write    "</font></td>" & vbNewline &_
+                    "                    </tr>" & vbNewline
+        end if
+        next
+    else
+        response.write    "                    <tr><td colspan=""3""><font size=""" & strDefaultFontSize & """>No usergroups were found.</font></td></tr>" & vbNewline
+    end if
+
+    response.write    "                </table>" & vbNewline &_
+            "            </td>" & vbNewline &_
+            "        </tr>" & vbNewline
+end if
+end if
+'#######     End UserGroup MOD      #######
+
+Response.Write    "              <tr>" & vbNewline & _
+        "                <td bgColor=""" & strPopUpTableColor & """>&nbsp;</td>" & vbNewline & _
+        "                <td bgColor=""" & strPopUpTableColor & """><input name=""Submit"" type=""submit"" value=""" & btn & """"</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="post_info.asp">post_info.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 266 add:<br>
+      <a href="#" onClick="document.getElementById('ta15').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta15" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+    if isDeniedMember(Forum_ID,MemberID) = 1 then
+        Go_Result "You have been denied access to this forum"
+    end if
+    if isReadOnly(Forum_ID,MemberID) = 1 then
+        Go_Result "Your access to this forum is read-only"
+    end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">        case "Edit"
+            if ((blnCStatus = 0) or (blnFStatus = 0) or (blnTStatus = 0)) and (AdminAllowed = 0) then
+                Go_Result "You have attempted to Edit a Reply to a Locked Topic", 0
+            end if
+    end select
+'#######    Begin UserGroup MOD     #######
+    if isDeniedMember(Forum_ID,MemberID) = 1 then
+        Go_Result "You have been denied access to this forum"
+    end if
+    if isReadOnly(Forum_ID,MemberID) = 1 then
+        Go_Result "Your access to this forum is read-only"
+    end if
+'#######     End UserGroup MOD      #######
+    if strPrivateForums = "1" and ForumChkSkipAllowed = 0 then
+        if not(chkForumAccess(Forum_ID,MemberID,false)) then
+                Go_Result "You do not have access to post to this forum", 0
+          end if
+    end if</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1159 add:<br>
+      <a href="#" onClick="document.getElementById('ta16').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta16" rows="1" cols="20">            newUGPerms rsCount("maxForumId")        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            set rsCount = my_Conn.execute("SELECT MAX(FORUM_ID) AS maxForumID FROM " & strTablePrefix & "FORUM ")
+            newForumMembers rsCount("maxForumId")
+            newUGPerms rsCount("maxForumId")        '#######    UserGroup MOD     #######
+            newForumModerators rsCount("maxForumId")
+            set rsCount = nothing</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1269 add:<br>
+      <a href="#" onClick="document.getElementById('ta17').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta17" rows="1" cols="20">            newUGPerms rsCount("maxForumId")        '#######    UserGroup MOD     ####### </textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            set rsCount = my_Conn.execute("SELECT MAX(FORUM_ID) AS maxForumID FROM " & strTablePrefix & "FORUM ")
+            newForumMembers rsCount("maxForumId")
+            newUGPerms rsCount("maxForumId")        '#######    UserGroup MOD     #######                   
+            newForumModerators rsCount("maxForumId")                   
+            set rsCount = nothing</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1407 add:<br>
+      <a href="#" onClick="document.getElementById('ta18').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta18" rows="1" cols="20">            updateUGPerms Forum_ID        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            updateForumMembers Forum_ID
+            updateUGPerms Forum_ID        '#######    UserGroup MOD     #######
+            if mLev = 4 then
+                updateForumModerators Forum_ID
+            end if</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1488 add:<br>
+      <a href="#" onClick="document.getElementById('ta19').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta19" rows="1" cols="20">            updateUGPerms Forum_ID        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            updateForumMembers Forum_ID
+            updateUGPerms Forum_ID        '#######    UserGroup MOD     #######
+            if mLev = 4 then
+                updateForumModerators Forum_ID
+            end if</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1814 add:<br>
+      <a href="#" onClick="document.getElementById('ta20').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta20" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+sub newUGPerms(fForumID)
+    on error resume next
+    if mlev = 4 or (mlev = 3 and CInt(strUGModForums) = 2) then
+    for each key in Request.Form
+        if Left(key,5) = "Perms" and Request.Form(key) <> "notset" then
+            strUGid = Trim(Mid(key,6))
+            strSql = "INSERT INTO " & strTablePrefix & "ALLOWED_USERGROUPS ("
+            strSql = strSql & "FORUM_ID, USERGROUP_ID, PERMS) VALUES ("
+            strSql = strSql & fForumID & ", " & strUGid & ", " & Request.Form(key) & ")"
+            my_Conn.execute(strSql)
+        end if
+    next
+    end if
+end sub
+
+sub updateUGPerms(fForumID)
+    if mlev = 4 then
+        my_Conn.execute("DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS WHERE FORUM_ID = " & fForumID)
+        newUGPerms(fForumID)
+    end if
+    if (mlev = 3 and CInt(strUGModForums) = 2) then
+        strSql = "SELECT UG.USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS UG " &_
+            "INNER JOIN " & strTablePrefix & "ALLOWED_USERGROUPS AUG " &_
+            "ON UG.USERGROUP_ID = AUG.USERGROUP_ID WHERE AUG.FORUM_ID = " & fForumID &_
+            " AND UG.MOD_HIDE = 0"
+        set rsOK = my_Conn.execute(strSql)
+        do while not rsOK.eof
+            strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                "WHERE FORUM_ID = " & fForumID & " AND USERGROUP_ID = " & rsOK("USERGROUP_ID")
+            my_Conn.execute(strSql)
+            rsOK.movenext
+        loop
+        rsOK.close
+        set rsOK = nothing
+        newUGPerms(fForumID)
+    end if
+end sub
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">sub updateForumMembers(fForumID)
+    my_Conn.execute ("DELETE FROM " & strTablePrefix & "ALLOWED_MEMBERS WHERE FORUM_ID = " & fForumId),,adCmdText + adExecuteNoRecords
+    newForumMembers(fForumID)
+end sub
+
+'#######    Begin UserGroup MOD     #######
+sub newUGPerms(fForumID)
+    on error resume next
+    if mlev = 4 or (mlev = 3 and CInt(strUGModForums) = 2) then
+    for each key in Request.Form
+        if Left(key,5) = "Perms" and Request.Form(key) <> "notset" then
+            strUGid = Trim(Mid(key,6))
+            strSql = "INSERT INTO " & strTablePrefix & "ALLOWED_USERGROUPS ("
+            strSql = strSql & "FORUM_ID, USERGROUP_ID, PERMS) VALUES ("
+            strSql = strSql & fForumID & ", " & strUGid & ", " & Request.Form(key) & ")"
+            my_Conn.execute(strSql)
+        end if
+    next
+    end if
+end sub
+
+sub updateUGPerms(fForumID)
+    if mlev = 4 then
+        my_Conn.execute("DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS WHERE FORUM_ID = " & fForumID)
+        newUGPerms(fForumID)
+    end if
+    if (mlev = 3 and CInt(strUGModForums) = 2) then
+        strSql = "SELECT UG.USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS UG " &_
+            "INNER JOIN " & strTablePrefix & "ALLOWED_USERGROUPS AUG " &_
+            "ON UG.USERGROUP_ID = AUG.USERGROUP_ID WHERE AUG.FORUM_ID = " & fForumID &_
+            " AND UG.MOD_HIDE = 0"
+        set rsOK = my_Conn.execute(strSql)
+        do while not rsOK.eof
+            strSql = "DELETE FROM " & strTablePrefix & "ALLOWED_USERGROUPS " &_
+                "WHERE FORUM_ID = " & fForumID & " AND USERGROUP_ID = " & rsOK("USERGROUP_ID")
+            my_Conn.execute(strSql)
+            rsOK.movenext
+        loop
+        rsOK.close
+        set rsOK = nothing
+        newUGPerms(fForumID)
+    end if
+end sub
+'#######    End UserGroup MOD      #######
+
+sub newForumModerators(fForumID)</textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="register.asp">register.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 189 add:<br>
+      <a href="#" onClick="document.getElementById('ta21').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta21" rows="1" cols="20">            Call UserGroupAutoJoin(chkString(rsKey("M_NAME"),"SQLString"))        '#######     UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            Call DoCount
+
+            Call UserGroupAutoJoin(chkString(rsKey("M_NAME"),"SQLString"))        '#######     UserGroup MOD      #######
+
+            '## Forum_SQL - Delete the Member
+            strSql = "DELETE FROM " & strMemberTablePrefix & "MEMBERS_PENDING "
+            strSql = strSql & " WHERE M_KEY = '" & key & "'"
+
+            my_Conn.Execute (strSql),,adCmdText + adExecuteNoRecords</textarea>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 577 add:<br>
+      <a href="#" onClick="document.getElementById('ta22').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta22" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+                if strAutoLogon = "1" then
+                    Call UserGroupAutoJoin(chkString(Session(strCookieURL & "strNTUserFullName"),"SQLString"))
+                else
+                    Call UserGroupAutoJoin(chkString(trim(Request.Form("Name")),"SQLString"))
+                end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            if strEmail = "1" and strEmailVal = "1" then
+                'Do Nothing
+            else
+                Call DoCount
+'#######    Begin UserGroup MOD     #######
+                if strAutoLogon = "1" then
+                    Call UserGroupAutoJoin(chkString(Session(strCookieURL & "strNTUserFullName"),"SQLString"))
+                else
+                    Call UserGroupAutoJoin(chkString(trim(Request.Form("Name")),"SQLString"))
+                end if
+'#######     End UserGroup MOD      #######
+            end if
+
+            regHomepage = ""</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 875 add:<br>
+      <a href="#" onClick="document.getElementById('ta23').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta23" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+Sub UserGroupAutoJoin(strNewMemberName)
+    strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS " &_
+        "WHERE AUTOJOIN = 1"
+    set rsAutoJoin = my_Conn.execute(strSql)
+    arAutoJoin = Null
+    if not rsAutoJoin.bof and not rsAutoJoin.eof then arAutoJoin = rsAutoJoin.GetRows
+    rsAutoJoin.close
+    set rsAutoJoin = Nothing
+    if not IsNull(arAutoJoin) then
+        for AJCnt = LBound(arAutoJoin,2) to UBound(arAutoJoin,2)
+            strSql = "SELECT MEMBER_ID FROM " & strMemberTablePrefix & "MEMBERS " &_
+                "WHERE M_NAME = '" & strNewMemberName & "'"
+            set rsUser = my_Conn.execute(strSql)
+            if not rsUser.bof and not rsUser.eof then
+                strSql = "INSERT INTO " & strTablePrefix & "USERGROUP_USERS " &_
+                    "(USERGROUP_ID, MEMBER_ID, MEMBER_TYPE) VALUES " &_
+                    "(" & arAutoJoin(0,AJCnt) & ", " & rsUser("MEMBER_ID") & ", 1)"
+                my_Conn.execute(strSql)
+            end if
+            rsUser.close
+            set rsUser = Nothing
+        next
+    end if
+End Sub
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">    for i = 0 to ubound(bwords)
+        if instr(1,lcase(fString), lcase(bwords(i)),1) <> 0 then
+            Err_Msg = Err_Msg & "<li>Username may not contain the word <b>" & bwords(i) & "</b></li>"
+            exit function
+        end if
+    next
+end function
+
+'#######    Begin UserGroup MOD     #######
+Sub UserGroupAutoJoin(strNewMemberName)
+    strSql = "SELECT USERGROUP_ID FROM " & strTablePrefix & "USERGROUPS " &_
+        "WHERE AUTOJOIN = 1"
+    set rsAutoJoin = my_Conn.execute(strSql)
+    arAutoJoin = Null
+    if not rsAutoJoin.bof and not rsAutoJoin.eof then arAutoJoin = rsAutoJoin.GetRows
+    rsAutoJoin.close
+    set rsAutoJoin = Nothing
+    if not IsNull(arAutoJoin) then
+        for AJCnt = LBound(arAutoJoin,2) to UBound(arAutoJoin,2)
+            strSql = "SELECT MEMBER_ID FROM " & strMemberTablePrefix & "MEMBERS " &_
+                "WHERE M_NAME = '" & strNewMemberName & "'"
+            set rsUser = my_Conn.execute(strSql)
+            if not rsUser.bof and not rsUser.eof then
+                strSql = "INSERT INTO " & strTablePrefix & "USERGROUP_USERS " &_
+                    "(USERGROUP_ID, MEMBER_ID, MEMBER_TYPE) VALUES " &_
+                    "(" & arAutoJoin(0,AJCnt) & ", " & rsUser("MEMBER_ID") & ", 1)"
+                my_Conn.execute(strSql)
+            end if
+            rsUser.close
+            set rsUser = Nothing
+        next
+    end if
+End Sub
+'#######     End UserGroup MOD      #######
+%></textarea></td>
+  </tr>
+</table>
+<hr>
+<p><b><a name="topic.asp">topic.asp</a></b></p>
+<table border="0" width="100%">
+  <tr>
+    <td width="50%" valign="top">approximately line 197 add:<br>
+      <a href="#" onClick="document.getElementById('ta26').select();return false;">Select
+      All<br>
+      </a>
+      <textarea wrap="off" name="ta26" rows="1" cols="20">'#######    Begin UserGroup MOD     #######
+if strPrivateForums <> "1" and (Request.Form("Method_Type") <> "login") and (Request.Form("Method_Type") <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+'#######     End UserGroup MOD      #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">if strPrivateForums = "1" and (Request.Form("Method_Type") <> "login") and (Request.Form("Method_Type") <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+
+'#######    Begin UserGroup MOD     #######
+if strPrivateForums <> "1" and (Request.Form("Method_Type") <> "login") and (Request.Form("Method_Type") <> "logout") and ForumChkSkipAllowed = 0 then
+    result = ChkForumAccess(Forum_ID, MemberID, true)
+end if
+'#######     End UserGroup MOD      #######
+
+if strModeration > 0 and Cat_Moderation > 0 and Forum_Moderation > 0 and AdminAllowed = 0 then
+        Moderation = "Y"
+else
+        Moderation = "N"
+end if</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"></td>
+    <td width="50%" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1106 add:<br>
+      <a href="#" onClick="document.getElementById('ta24').select();return false;">Select
+      All<br>
+      </a>
+      <textarea wrap="off" name="ta24" rows="1" cols="20">if isReadOnly(Forum_ID,MemberID) = 0 then    '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">Sub QuickReply()
+if isReadOnly(Forum_ID,MemberID) = 0 then    '#######    UserGroup MOD     #######
+    intSigDefault = getSigDefault(MemberID)</textarea></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">approximately line 1159 add:<br>
+      <a href="#" onClick="document.getElementById('ta25').select();return false;">Select All<br>
+      </a>
+      <textarea wrap="off" name="ta25" rows="1" cols="20">end if                        '#######    UserGroup MOD     #######</textarea></td>
+    <td width="50%" valign="top">this and surrounding code looks like:<br><br>
+      <textarea wrap="off"  class="result" rows="1" cols="20" name="result">            "      </table>" & vbNewLine & _
+            "      <br />" & vbNewLine
+end if                        '#######    UserGroup MOD     #######
+end sub
+%></textarea></td>
+  </tr>
+</table>
+<hr>
+<h3><a name="How_to_Use">How to Use the UserGroups MOD</a></h3>
+<table border="0" width="100%" cellspacing="5">
+  <tr>
+    <td width="50%" valign="top"><b><u>Admin Options</u></b><br>
+      After installation, the UserGroups Manager appears in
+            Admin Options.</td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/admin_home.jpg"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><b><u> UserGroups Manager</u></b><br>
+      The UserGroups Manager allows administrators to set
+            configuration variables and add, edit and delete UserGroups.
+      <p><b>Configuration Variables</b></p>
+      <ul>
+        <li><b>UserGroup Information Visible</b> - UserGroup names and
+          description visible to one of the following: Admin only, UserGroup
+          Members, All Members.&nbsp; If UserGroup Members is chosen, then only
+          a user that is a member of a UserGroup will be able to see the
+          UserGroup's name and description.</li>
+        <li><b>UserGroup Members Visible</b> - UserGroup membership visible to
+          one of the following: Admin only, UserGroup Members, All
+          Members.&nbsp; Options available depending on the selection above. (See
+          picture at the right.)</li>
+        <li><b>Moderator Access</b> - define whether or not forum moderators
+          will be able to view and/or edit UserGroup permissions for their
+          forums.</li>
+      </ul>
+      <p><b>UserGroups Listing</b><br>
+      Any defined UserGroups appear below the configuration.&nbsp; From this
+      listing, UserGroups can be added, edited and deleted.</p>
+    </td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/admin_usergroups1.jpg" width="500" height="234"><br>
+      <img border="1" src="readme_pics/admin_usergroups2.jpg"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><b><u>UserGroup Properties</u></b><br>
+      Each UserGroup contains the following properties:
+      <ul>
+        <li><b>Name</b></li>
+        <li><b>Description</b> (recommend using this to explain forum access if
+          visibility is turned on)</li>
+        <li><b>Options</b>: Hidden from members, Hidden from forum moderators
+          (from within forum properties), Auto-join for new members on
+          registration</li>
+        <li><b>Group Members</b> - can be forum members or other UserGroups</li>
+        <li><b>Forum Permissions</b>: Do Not Set, Deny, Read-Only, Allow.&nbsp;
+          Allow permissions are only available for forums with an &quot;Allowed
+          Member List&quot; Auth Type.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/admin_usergroups3.jpg" width="500" height="398"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><u><b>Forum Properties</b></u><br>
+      UserGroup permissions will appear on the forum's edit page and are visible
+      to administrators and forum moderators depending on the configuration
+      described above.&nbsp;
+    </td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/forum_properties.jpg" width="500" height="228"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><b><u>User Profile</u></b><br>
+      UserGroups are visible on a member's profile page to administrators.&nbsp;
+      Depending on the configuration as described above, other members may be
+      able to view this information as well.&nbsp;&nbsp;
+      <p> Administrators can also
+      assign users to groups by editing their profile.</p>
+    </td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/pop_profile1.jpg" width="500" height="161"><br>
+      <img border="1" src="readme_pics/pop_profile2.jpg" width="380" height="194"></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><b><u>UserGroup Information</u></b><br>
+      A link to UserGroups is available in the forum navigation menu if the
+      administrator has set UserGroup information visibility to something other
+      than Admin only.&nbsp;UserGroups that appear on this page depend on the user.
+      <p><b>What Administrators See</b><br>
+      Administrators can view all groups and group members.&nbsp;&nbsp;</p>
+      <p><b>What Members See</b><br>
+      If the
+      configuration is set to allow UserGroup Information to be visible to
+      UserGroup Members, then only the group(s) to which the user belongs will
+      appear.&nbsp; UserGroup members can then be viewed by clicking the group
+      icon on the right.&nbsp; This also depends on the configuration as
+      described above.&nbsp; UserGroups that have been Hidden from members will
+      not display.</p>
+      <p><b>What Moderators See</b><br>
+      Forum moderators will see the same listing as described for regular
+      members with the following exceptions:</p>
+      <ul>
+        <li>Moderators will be able to view the UserGroups and members that are
+      assigned to their forums if the Moderator Access type is set to
+      View.</li>
+        <li>If the Moderator access type is set to Edit, moderators will
+      be able to view all UserGroups and members.</li>
+        <li>UserGroups that have
+      been Hidden from moderators will not display unless the moderator is a
+          member of that UserGroup.&nbsp; In that case, the UserGroup will be
+          displayed as described for regular members.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top" align="left"><img border="1" src="readme_pics/navigation.jpg" width="387" height="89"><br>
+      <img border="1" src="readme_pics/usergroups1.jpg" width="500" height="147"><br>
+      <img border="1" src="readme_pics/usergroups2.jpg" width="500" height="176"></td>
+  </tr>
+</table>
+<hr>
+<h3><a name="Uninstalling">Uninstalling</a></h3>
+<p>If you choose to uninstall the UserGroups MOD, simply do a search in the
+above files for &quot;UserGroup MOD&quot; and delete the code that appears
+either inbetween the commented lines or single lines with a comment at the
+end.&nbsp; The functions
+      isAllowedMember and OldisAllowedMember will need to be reinserted into
+inc_func_common.asp with their originals.&nbsp; Delete the admin_usergroups.asp
+and usergroups.asp files.&nbsp; You may also optionally choose
+to delete the USERGROUP tables (FORUM_USERGROUPS, FORUM_USERGROUP_USERS,
+FORUM_ALLOWED_USERGROUPS) and the UserGroup specific variables created in
+the FORUM_CONFIG_NEW table (strUGView, strUGViewMem, strUGModForums).&nbsp; After uninstalling, you will need to manually
+add members to any &quot;Allowed&quot; forums.</p>
+</body>

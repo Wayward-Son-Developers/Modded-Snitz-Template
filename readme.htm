@@ -1,0 +1,688 @@
+<html>
+
+<head>
+<title>Snitz Forums 2000 Installation Guide and Readme</title>
+<style>
+body {background-color:#FFFFFF;font-family:Verdana, Arial, Helvetica;}
+p {font-family:Verdana, Arial, Helvetica;font-size:13px;}
+li {font-family:Verdana, Arial, Helvetica;font-size:13px;}
+td {font-family:Verdana, Arial, Helvetica;font-size:13px;}
+.header {font-family:Verdana, Arial, Helvetica;font-size:24px;}
+.note {font-family:Verdana, Arial, Helvetica;font-size:13px;color:#FF6600;}
+.team {font-family:Verdana, Arial, Helvetica;font-size:13px;}
+</style>
+</head>
+
+<body>
+
+<!--
+'#################################################################################
+'## Snitz Forums 2000 v3.4.07
+'#################################################################################
+'## Copyright (C) 2000-09 Michael Anderson, Pierre Gorissen,
+'##                       Huw Reddick and Richard Kinser
+'##
+'## This program is free software; you can redistribute it and/or
+'## modify it under the terms of the GNU General Public License
+'## as published by the Free Software Foundation; either version 2
+'## of the License, or (at your option) any later version.
+'##
+'## All copyright notices regarding Snitz Forums 2000
+'## must remain intact in the scripts and in the outputted HTML
+'## The "powered by" text/logo with a link back to
+'## http://forum.snitz.com in the footer of the pages MUST
+'## remain visible when the pages are viewed on the internet or intranet.
+'##
+'## This program is distributed in the hope that it will be useful,
+'## but WITHOUT ANY WARRANTY; without even the implied warranty of
+'## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'## GNU General Public License for more details.
+'##
+'## You should have received a copy of the GNU General Public License
+'## along with this program; if not, write to the Free Software
+'## Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+'##
+'## Support can be obtained from our support forums at:
+'## http://forum.snitz.com
+'##
+'## Correspondence and Marketing Questions can be sent to:
+'## manderson@snitz.com
+'##
+'#################################################################################
+-->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="19%"><img border="0" src="images/logo_snitz_forums_2000.gif" width="163" height="76" alt="Snitz Forums 2000 logo"></td>
+    <td width="81%" valign="top">
+    <p align="center" class="header">Snitz<sup><font size="-1">TM</font></sup> Forums 2000 Version 3.4.07<br>Installation Guide and Readme</p></td>
+  </tr>
+  <tr>
+    <td width="100%" colspan="2">
+    <hr size="1"><a name="toc"></a>
+    <h3>Table Of Contents</h3>
+    <ul>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#install">Installation Instructions</a></li>
+      <li><a href="#upgrade">Upgrade Instructions</a></li>
+      <li><a href="#FAQ">Installation FAQ</a></li>
+      <li><a href="#support">Getting Support</a></li>
+      <li><a href="#donations">Donations</a></li>
+      <li><a href="#copy">Copyright / Credits</a></li>
+    </ul>
+    </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%">    
+    <hr size="1"><a name="intro"></a>
+    <h3>Introduction</h3>
+    <p>Thank you for downloading Snitz Forums 2000!&nbsp; If you downloaded our 
+    software from any site other than <a href="http://forum.snitz.com">http://forum.snitz.com</a>, please 
+    check there for the latest official release.</p>
+    <p>This version again has many bug fixes, several new security related 
+    features, and has been greatly optimized for use in heavy traffic situations.</p></td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td>
+    <hr size="1"><a name="install"></a>
+    <h3>Installation Instructions</h3>
+    <p class="note"><b>NOTE:</b> If you know that your server supports 
+    ASP and what database you plan to use, skip to step 3.</p>
+    <ol>
+      <li><p>Confirm that your server supports ASP (Active Server Pages).&nbsp; This 
+      should be on the list of features for your host.&nbsp; Windows 
+      servers commonly support ASP files. Unix servers can support ASP files if they have the 3rd party
+      software called ChiliASP, installed.</p></li>
+		
+      <li><p>Determine what type of database you plan to use.&nbsp; Snitz supports 
+      three types of databases:&nbsp; Access, MS SQL, and MySQL.&nbsp; Which 
+      database you will use depends on your server and how big you expect your 
+      forum to get.&nbsp; The most common type of database used is Access. It 
+      works nicely for smaller forums on Windows servers.&nbsp; Larger, more 
+      active forums may wish to use one of the other database types if it is 
+      supported by their server. If you are unsure which database 
+      type you should use, then you should use Access.<br><br>
+      Unix servers only support MySQL databases.</p></li>
+		
+      <li><p>Unzip the contents of the sf2k_v34_07.zip archive (except for the <b>dbase</b> folder, which contains an Access database)
+      to a folder on your hard drive. (ex: c:\Snitz\)<br><br>
+      If you plan to use Access as your database, extract the <b>dbase</b> folder as well, to the same folder where you placed 
+	  the other forum files.</p></li>
+		
+      <li><p>Open the config.asp file in your favorite text editor.&nbsp; <br>
+      <font color="#FF0033"><b>WARNING:</b> DO NOT USE FRONTPAGE TO DO THIS.</font><br>
+      <font color="#008000"><b>TIP:</b> A text editor that displays line numbers 
+      can be helpful when modifying ASP files.&nbsp; We suggest a free text editor called
+      Araneae. You can use your favorite search engine to search for it.</font><br></p>
+		
+      <p><b>Setting the Database Type:</b><br>
+      Remove the <font color="#FF0000"><b>'</b></font> from in front of 
+      the &quot;<font color="#003399">strDBType</font>&quot; 
+      variable that corresponds with the database type you want to use. The following table
+      shows some examples of how your strDBType would look like for each database.<br><br></p>
+        <table align="center" border="0" cellspacing="1" cellpadding="3" bgcolor="#000000" bordercolor="#111111">
+          <tr bgcolor="#000066"> 
+            <td width="33%" align="center"><font color="#FFFFFF"><b>ACCESS</b></font></td>
+            <td width="33%" align="center"><font color="#FFFFFF"><b>MS SQL</b></font></td>
+            <td width="33%" align="center"><font color="#FFFFFF"><b>MySQL</b></font></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td align="left"><br>
+            <font color="#FF0000"><b>'</b></font>strDBType = &quot;sqlserver&quot;<br>
+            <font color="#003399">strDBType = &quot;access&quot;</font><br>
+            <font color="#FF0033"><b>'</b></font>strDBType = &quot;mysql&quot;<br></td>
+            <td align="left"><br>
+            <font color="#003399">strDBType = &quot;sqlserver&quot;</font><br>
+            <font color="#FF0033"><b>'</b></font>strDBType = &quot;access&quot;<br>
+            <font color="#FF0033"><b>'</b></font>strDBType = &quot;mysql&quot;<br></td>
+            <td align="left"><br>
+            <font color="#FF0000"><b>'</b></font>strDBType = &quot;sqlserver&quot;<br>
+            <font color="#FF0033"><b>'</b></font>strDBType = &quot;access&quot;<br>
+            <font color="#003399">strDBType = &quot;mysql&quot;</font><br></td>
+          </tr>
+        </table>
+      <br><br><p>
+      <b>Setting the Connection String:</b><br>
+      Next, you need to set up your connection string, so your forum will know
+      where to find your database.&nbsp; Below the Database Type (which you just set) is a list of 
+      connection string options for each database type.<br>
+      The following table shows you how to set the connection string for each type of database that is available.</p>
+        <table border="0" cellspacing="1" cellpadding="3" bgcolor="#000000" bordercolor="#111111">
+          <tr bgcolor="slateblue">
+            <td bgcolor="#000066" width="33%" align="left"><font color="#FFFFFF"><b>Access Database</b></font></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td>
+            <br><p><b>Change the database name:</b><br>
+            When using an Access database, all the data is stored in a single file, unlike the other databases.
+            So caution should be taken in where you store your Access database as it can be downloaded by anyone
+            if they know the path.&nbsp;<br>If you store your Access database in a folder outside of your www folder
+            (or wherever you keep the files for the rest of your site), then you should be safe because no one can download
+            your database if it is outside of your www folder.<br>If you store your
+            database in a cgi-bin folder, or in your www folder, then it is strongly recommended that you change the default
+            database name from <b>snitz_forums_2000.mdb</b> to a cryptic or not easy to guess name. The name should be a combination
+            of letters and numbers. That makes it hard for anyone to guess the name of your database.<br><br>
+            Example: <font color="#800080"><b>n92yr2fnis.mdb&nbsp;</b></font><br><br>
+            <br></p>
+
+            <p><b>Choosing the connection string to use:</b><br>
+            We provide 6 different connection strings you can choose from, to use to connect to your Access database.<br>
+            The first 3 connection strings are Access 2000 connection strings. It uses the latest Microsoft Jet drivers
+            to connect to the database. We recommend you use one of these to connect to your database.<br>
+            The other 3 connection strings are Access 97 connection strings. It uses the older version of Microsoft's
+            Access database drivers to connect to the database. Only use one of these connection strings if the Access 2000
+            one doesn't work.
+            <p class="note"><b>NOTE:</b> You do not need to have Microsoft Access on your computer to use the Access database.</p>
+            The following options explain how to use each connection string.</p>
+              <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111" width="100%" height="328">
+                <tr>
+                  <td valign="top">
+                  <b>Option 1: Using the physical path to the database</b><br>
+                  <center>
+                  <form>
+                  <textarea cols="80" rows="3" name="ConnString1" wrap="off" readonly>
+strConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=c:\inetpub\dbase\snitz_forums_2000.mdb" '## MS Access 2000 using physical path
+strConnString = "DRIVER={Microsoft Access Driver (*.mdb)}; DBQ=c:\inetpub\dbase\snitz_forums_2000.mdb" '## MS Access 97 using physical path
+                  </textarea>
+                  </form>
+                  </center>
+                  <p>Using one of the above connection strings require you to know the physical path to your database.
+                  To help you find this physical path, we have provided a script called <b>whereami.asp</b>, which 
+                  you can find in the <b>tools.zip</b> file in your forum folder with your other forum files.<br>
+                  If your database folder is accessible from the web, upload the <b>whereami.asp</b> file to the folder
+                  where you are going to put your database.&nbsp;
+                  From your browser, type in the location to your <b>whereami.asp</b> file:<br><br>
+                  http://&lt;yourServerName&gt;/&lt;databaseDirectoryName&gt;/whereami.asp?dbname=<font color="#800080"><b><i>my_database</i></b></font>.mdb<br><br>
+                  The <b>whereami.asp</b> will output the physical path to your database along with an example of
+                  how your connection string would look like. Update your connection string with the physical
+                  path to your database.<br><br>
+
+                  Make sure to remove the <font color="#FF0000"><b>'</b></font> from the beginning of the connection
+                  string you are going to use.</p><br></td>
+                </tr>
+                <tr>
+                  <td valign="top">
+                  <b>Option 2: Using the virtual path to database</b><br>
+                  <center>
+                  <form>
+                  <textarea cols="80" rows="3" name="ConnString2" wrap="off" readonly>
+strConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.MapPath("dbase/snitz_forums_2000.mdb") '## MS Access 2000 using virtual path
+strConnString = "DRIVER={Microsoft Access Driver (*.mdb)}; DBQ=" & Server.MapPath("dbase/snitz_forums_2000.mdb") '## MS Access 97 using virtual path
+                  </textarea>
+                  </form>
+                  </center>
+                  <p>Using one of the above connection strings allows you to connect to your database if you are uncertain
+                  of the physical path to your database. It uses the <b>Server.MapPath()</b> method to find
+                  the physical path to your database.<br><br>
+
+                  The <b>Server.MapPath()</b> method starts from the root of your website, to the path you specify.
+                  For example, if your folders are setup like the following:</p>
+                  <pre>
+                  /Root
+                     /www
+                        /forum
+                        /images
+                     /cgi-bin
+                  </pre>
+                  <p>And you have your database in the cgi-bin folder, then the relative path to your database would be
+                  <font color="#003399">/cgi-bin/snitz_forums_2000.mdb</font>. Using this, your connection string would
+                  look like the following:
+                  <p>strConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.MapPath(&quot;<font color="#003399">/cgi-bin/snitz_forums_2000.mdb</font>&quot;)
+                  '## MS Access 2000 using virtual path<br><br>
+
+                  This path should be local on the server, and not a web path. (NOT http://) You can always use the
+                  <b>whereami.asp</b> file to help you determine the relative path to your database. The <b>whereami.asp</b>
+                  file will show you the full physical path to your database. From that path you can determine the relative
+                  path to your database.<br><br>
+
+                  Make sure to remove the <font color="#FF0000"><b>'</b></font> from the beginning of the connection
+                  string you are going to use.</p><br></td>
+                </tr>
+                <tr>
+                  <td>
+                  <b>Option 3: Users on Brinkster's free server</b><br>
+                  <center>
+                  <form>
+                  <textarea cols="70" rows="3" name="ConnString3" wrap="off" readonly>
+strConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.MapPath("/USERNAME/db/snitz_forums_2000.mdb") '## MS Access 2000 on Brinkster
+strConnString = "DRIVER={Microsoft Access Driver (*.mdb)}; DBQ=" & Server.MapPath("/USERNAME/db/snitz_forums_2000.mdb") '## MS Access 97 on Brinkster
+                  </textarea>
+                  </form>
+                  </center>
+                  <p>We have provided connection strings for users who have their forums hosted on Brinkster's free server.
+                  All that is needed for you to do is to replace the <b><font color="#800080">&quot;USERNAME&quot;</font></b>
+                  with your Brinkster username, that you signed up with and remove the
+                  <font color="#FF0000"><b>'</b></font> from the beginning of the line.<br><br>
+                  For example, if your Brinkster username is <b><font color="#003399">&quot;JohnDoe&quot;</font></b> 
+                  then your connection string would look like this:<br><br>
+                  strConnString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & Server.MapPath("/<b><font color="#003399">JohnDoe</font></b>/db/snitz_forums_2000.mdb") 
+                  '## MS Access 2000 on Brinkster<br><br></p>
+                  <p class="note"><b>NOTE:</b> If you change the name of your database, you will need to make that change in your
+                  connection string too.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td bgcolor="#000066" align="left"><font color="#FFFFFF"><b>Microsoft SQL and MySQL database</b></font></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td> 
+            <br>
+            Before installing on an MS SQL or MySQL database, you need to have a database already created to use.&nbsp; 
+            This can be a new, empty database, or an existing database that you are using for the rest
+            of your site.&nbsp; If you are unsure which database you can use, please contact your host and
+            ask them which one they support.
+            <center>
+            <form>
+            <textarea cols="70" rows="5" name="ConnString4" wrap="off" readonly>
+strConnString = "Provider=SQLOLEDB;Data Source=SERVER_NAME;database=DB_NAME;uid=UID;pwd=PWD;" '## MS SQL Server 6.x/7.x/2000 (OLEDB connection)
+strConnString = "driver={SQL Server};server=SERVER_NAME;uid=UID;pwd=PWD;database=DB_NAME" '## MS SQL Server 6.x/7.x/2000 (ODBC connection)
+
+strConnString = "driver={MySQL ODBC 3.51 Driver};option=16387;server=SERVER_IP;user=UID;password=PWD;DATABASE=DB_NAME;" '##MySQL w/ MyODBC v3.51
+            </textarea>
+            </form>
+            </center>
+            <p>There are 2 connection strings available to connect to a MS SQL database and 1
+            connection string to connect to a MySQL database as you can see above. For MS SQL databases
+            we suggest you use the first MS SQL connection string as it is more efficient.<br><br>
+            You will need the following information to connect to your database:<br>
+            <font color="#808000"><b>SERVER_NAME</b></font>: This is usually 'localhost', 
+            an IP address such as '198.0.1.163' or a server address such as 'mysql.server.com', depending
+            on your host. This is not the url for your website.<br>
+            <font color="#008080"><b>UID</b></font>: This will be the username that has permission 
+            to connect to the database.<br>
+            <font color="#FF00FF"><b>PWD</b></font>: This will be the password for the username to
+            connect to your database.<br>
+            <font color="#FF6600"><b>DB_NAME</b></font>: This is the name of your
+            database.<br><br>
+            Please contact your host if you are uncertain about what to put for each value.<br><br>
+            Remove the <b><font color="#FF0000">'</font></b>
+            from the beginning of the connection string you wish to use and 
+            fill in the information you gathered earlier.<br>&nbsp;</p></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td bgcolor="#000066"><b><font color="#FFFFFF">DSN</font></b></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td>
+            <br>
+            <p>If you would like to use a DSN (Data Source Name) connection, to connect to your database
+            instead, there is a connection string you can use.
+            <pre>strConnString = "DSN_NAME" '## DSN</pre>		  
+            Remove the <font color="#FF0000"><b>'</b></font> from in front of the strConnString 
+            example marked '## DSN. Replace the <b><font color="#800080">&quot;DSN_NAME&quot;</font></b>
+            with the name of your DSN connection.&nbsp; If your DSN name is <font color="#003399"><b>&quot;MyDatabase&quot;</b></font> 
+            then your connection string will look like this:
+            <pre>strConnString =<b><font color="#003399"> &quot;MyDatabase&quot;</font></b> '## DSN</pre></p></td>
+          </tr>
+        </table>
+      </li>
+      <br><br>
+      <li><b>Setting the Table Prefixes:</b><br>
+      <font color="#FF6600"><b>NOTE:</b> Change these settings only if you will be running more than one
+      forum using the same database.</font>
+      <p>Each forum that is using the database needs to have a unique string
+      prefix for its tables.&nbsp; The default prefix is &quot;FORUM_&quot; for both the
+      members table and the forum tables.&nbsp; You will need to change this from the default value
+      for each additional forum you have setup, if you want each forum to share the same database.<br>
+      <br>
+      If you wish to share members information between multiple forums that uses the
+      same database, then you need to use the same prefix for the &quot;<font color="#003399">strMemberTablePrefix</font>&quot; 
+      for the other forums you wish to share the members information with.&nbsp; <br></p></li>
+
+      <li><p>Upload the files (except the Access database)&nbsp; to a folder on
+      your server.&nbsp; Usually: <b>/forum/</b><br>
+      <font color="#008000"><b>TIP: </b>It is recommended that you use an FTP 
+      client in ASCII transfer mode to upload your ASP files.</font></p></li>
+  
+      <li><b>Uploading & Setting up the database:</b><br>
+        <table border="0" cellspacing="1" cellpadding="3" bgcolor="#000000" bordercolor="#111111">
+          <tr bgcolor="slateblue">
+            <td bgcolor="#000066" width="33%" align="left"><a name="accdbupload"></a><b><font color="#FFFFFF">New Install - ACCESS</font></b></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top"> 
+            <td>
+            <br>
+            <font color="#FF6600"><b>NOTE:</b> Access databases can only be used on a Windows Server.
+            You will need to use a MySQL or MS SQL database if you are on a Unix Server.</font>
+            <p>Upload the Access Database file to a folder that has Read|Write permissions. Common examples
+            of folders with Read|Write permission are:<br>
+            Examples:&nbsp;&nbsp;&nbsp;&nbsp; /cgi-bin/&nbsp;&nbsp;&nbsp;&nbsp; 
+            /fpdb/&nbsp;&nbsp;&nbsp;&nbsp; /database/&nbsp;&nbsp;&nbsp;&nbsp; /db/<br><br>
+
+            <font color="#008000"><b>TIP:</b> It is advisable to make sure this directory is not
+            accessible by the web to stop people from downloading your database.</font><br><br>
+
+            <font color="#FF6600"><b>NOTE:</b> Setting folder permissions on a Windows Server is different from setting permissions
+            on a Unix Server. On a Unix Server you can change file/folder permissions using your FTP program.
+            With a Windows Server, you will need to contact your host to change permissions on a file/folder.
+            Or use the Windows Explorer to change permissions of a file or folder, if you are running your own
+            server.</font><br><br>
+
+            If you are running your own server, you need to make sure that the
+            &quot;IUSR_YOURMACHINENAME&quot; account (or EVERYONE) has full access
+            to your database file and folder.<br><br>
+
+            Open http://&lt;yourservername&gt;/&lt;forumdirectoryname&gt;/setup.asp in your 
+            browser.&nbsp; Then follow the instructions to setup your database.<br></p></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top">
+            <td bgcolor="#000066" align="left"><b><font color="#FFFFFF">New Install - MS SQL or MySql</font></b></td>
+          </tr>
+          <tr bgcolor="#f5f5f5" valign="top">
+            <td>
+            <p><br>Open http://&lt;yourservername&gt;/&lt;forumdirectoryname&gt;/setup.asp in your 
+            browser.<br>
+            Follow the instructions to create the forum tables in your database.<br><br></p></td>
+          </tr>
+        </table>
+      <br>
+      </li>
+  
+      <li><p>After the forum is installed you can log in as the administrator with the username and
+      password you supplied at setup. Then you will need to click on the &quot;Admin Options&quot;
+      link at the top right of the page. Then log in again to the Admin Section using the same
+      admin username and password.<br><br>
+      You will now be at the Admin Control Panel, where you can configure the forum to match
+      your site and colors.<br></p></li>
+
+      <li><b>Configuring your Email Configuration:</b><br>
+      <br>
+        <table border="0" cellpadding="0" cellspacing="0" bordercolor="#111111">
+          <tr>
+            <td valign="top">
+            Configuring the email server is a commonly overlooked part of setting up a forum.
+            This is very important though because there are several features that will not work without 
+            it. For example: Subscriptions, Email Validation, Forget Password Option, Emailing Members, etc.<br><br>
+            <center><img border="0" src="images/readme_admin_email_config.gif" width="456" height="226" alt="Picture of the E-mail Server Configurations"></center><br>
+            The email component select box will display a list of email components that are installed on your server.
+            There is no particular 'right choice' as any that are listed will work.<br><br>
+            <p>NOTE: If the select box says <font COLOR="#800080">&quot;No Compatible 
+            Component Found&quot;</font>, then you will have to either install a component or not use email.<br>
+            <br>
+            Email mode should be &quot;on&quot; if you want your forum to send email, or 
+            &quot;off&quot; if you don't want it sending email.&nbsp; This function will be 
+            disabled if no email component is selected.</p>
+            <p>Email server should point to an outgoing SMTP server that can be 
+            used to send email.&nbsp; If you have POP3 email, then this is the 
+            same as your &quot;outgoing mail server&quot; in your email configuration.</td>
+          </tr>
+        </table>
+      </li>
+    </ol>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td>
+    <hr size="1"><a name="upgrade"></a>
+    <h3>Upgrade Instructions</h3>
+    <p class="note"><b>NOTE:</b> It is recommended that you backup your database before you upgrade.</p>
+    <ol>
+      <li><p>To upgrade your forum you will need to modify your connection string to point to your backup
+      copy of the database you want upgrade.</p></li>
+      <li><p>Go to the setup.asp file in your forum directory.<br>
+      Ex.: http://&lt;yourservername&gt;/&lt;forumdirectoryname&gt;/setup.asp<br><br>
+      Follow the instructions to upgrade your database to the current version.
+      Upgrade of the database is supported from Snitz Forums Version 3.0 Release Candidate 1 and later.<br>
+      <br>
+      Please note that when upgrading your forum, you will have to re-install any mods you
+      previously added to your forum.</p></li>
+      <li><p>After the upgrade has been completed, log into your Admin Options and click
+      the <b>Update Forum Counts</b> link to complete the upgrade.</p></li>
+    </ol>
+    </td>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%">
+    <hr size="1">
+    <h3><a name="FAQ"></a>Installation FAQ</h3>
+    <p class="note"><b>NOTE:</b> This is a very short list of setup 
+    related questions that are commonly asked in the support forums. If 
+    the answer to your question isn't here, please post your question at the 
+    <a href="http://forum.snitz.com/forum/">Snitz Forums</a>.<br></p>
+
+    <p><b>Q: Why is my browser trying to download an ASP file? <font color="#FF0000">OR</font> Why does my browser display the ASP code?</b><br><br>
+    <b>A:</b> This usually means that either your host does not support ASP (Active Server Pages), or your server has not been configured correctly.
+    Check again to make sure your host supports ASP. If unsure, contact your technical support or your system administrator.</p>
+
+    <p><b>Q: Why do I get an &quot;HTTP 500 - Internal Server Error&quot;?</b><br><br>
+    <b>A:</b> A 500 error usually means that there has been a problem running the script or
+    connecting to the database.
+    If you are using Internet Explorer you may have to turn off "Friendly HTTP Error Messages" before
+    you will get any useful information.  To do this, go to <b>Tools</b> >> <b>Internet Options...</b> >> click the
+    <b>Advanced Tab</b> >> <b>Uncheck the "Show Friendly HTTP Error Messages" option</b>.<br>
+    Once you have turned off the Friendly HTTP Error messages, you should get an error that is a little more
+    descriptive which may help you troubleshoot your problem.  If you still can not understand the error,
+    ask for help at our support forums. We will be glad to help.  Be sure to include the information
+    given to you by the error message.</p>
+
+    <p><b>Q: Why do I get an &quot;Operation must use an updateable query&quot; error when 
+    trying to use my forum?</b><br><br>
+    <b>A:</b> This is a common HTTP 500 error encountered when setting up an Access Database.
+    It means that the folder in which you have placed the database does not have proper permissions
+    granted to the server to modify the files.  Make sure that if your host provided a location
+    specifically for databases, that you have put the database there.
+    For more information and other possible resolution strategies, you can refer to this article:
+    <a href="http://support.microsoft.com/default.aspx?scid=kb;EN-US;q175168" target="_blank">http://support.microsoft.com/default.aspx?scid=kb;EN-US;q175168</a><br></p></td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    <hr size="1"><a name="support"></a>
+    <h3>Getting Support</h3>
+    <p>As of the writing of this file, there is no official documentation for 
+    Snitz Forums 2000.&nbsp; Providing such documentation is currently a goal of 
+    the Snitz Forums 2000 Team.<br><br>
+    In the meanwhile, please bring your questions to the
+    <a href="http://forum.snitz.com/forum/">Snitz Community Forums</a>.</p>
+
+    <p class="note"><b>NOTE:</b> We can not answer Support Questions via 
+    e-mail.<br></p>
+
+    <p><b><font color="#008000">TIP: When asking for help, please 
+    consider the following:</b><br>(These will help us to answer your question more quickly!)</font></p>
+    <p><b>DO -</b></p>
+    <ul>
+      <li><b><a href="http://forum.snitz.com/forum/search.asp">Search</a></b> 
+      the forum for a possible answer before posting.</li>
+      <li>Post a link to your forum.</li>
+      <li>Tell us if you are using Access, SQL Server or a MySQL database.</li>
+      <li>Tell us if this is a new problem, or if it has been happening a while.</li>
+      <li>Post your question in the most appropriate forum.</li>
+      <li>Tell us what version of the forum you are running.<br>
+      <font color="#008000"><b>TIP:</b> Version info can be accessed by going to your Admin
+      Options and in your Main Forum Config.</font></li>
+      <li>Tell us if you have installed any mods.</li>
+      <li>Tell us which database connection string you are using.</li>
+      <li>Make your subject descriptive.</li>
+      <li>Tell us if this is a mission critical forum.</li>
+      <li>Provide steps to recreate the problem, if applicable.<br></li>
+    </ul>
+
+    <p><b>DON'T -</b></p>
+    <ul>
+      <li>Post &quot;HELP!&quot; as a subject. That's not going to get your question
+      answered any sooner. It may in fact take longer. Some persons look at the subject
+      for ways they can help out.</li>
+      <li>Forget that this is a volunteer system. There are no paid members here
+      whose job is to answer your question.</li>
+      <li>Be vague in the description of your problem. &quot;It's broken!&quot; isn't
+      descriptive enough.</li>
+      <li>Worry about your grammar and spelling. If you are a non-English
+      speaker and you are afraid that your message may not be clear in English,
+      then post in your native language as well. There may be someone from your
+      country who will have an answer for you and be able to tell you in your
+      own language, as well as English.</li>
+      <li>Please don't use large .gif or .jpg files in your signature. This
+      slows down the system if you are a frequent poster. In most cases, less is
+      better.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    <hr size="1"><a name="donations"></a>
+    <h3>Donations</h3>
+    <p>Information on donations can be found at:
+    <a href="http://forum.snitz.com/donations.asp">http://forum.snitz.com/donations.asp</a>.</p><br></td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    <hr size="1"><a name="copy"></a>
+    <h3>Copyright / Credits</h3>
+    <p>If you have any problems, find any bugs or have suggestions (for improvement or
+    otherwise) please use our support forum at <a href="http://forum.snitz.com">http://forum.snitz.com</a> to communicate
+    your issue(s) with us.<br>
+    <br>
+    Snitz Forums 2000 is a product of the combined work of many individuals that 
+    contribute countless hours of non-funded development time. All of them deserve
+    full credit for this wonderful product's existence.<br>
+    <br>
+    Special Thanks go to Nathan Bales (Nathan) for the construction of this readme file and Rui Ribeiro
+    (ruirib) for proof reading this document.<br>
+	<br>
+	Special thanks go out to our Support Moderators who not only provide technical support to our members, 
+    but also assist the Development Team with their valuable input and coding skills.</p>
+      <table align="center" border="0" cellspacing="1" cellpadding="3" bgcolor="#000000" bordercolor="#111111">
+        <tr bgcolor="slateblue"> 
+		  <td width="100%" bgcolor="#000066" align="center" colspan="4"><font color="#ffffff"><b>Current Team Members</b></font></td>
+		</tr>
+        <tr bgcolor="slateblue"> 
+          <td width="25%" bgcolor="#000066" align="center"><font color="#ffffff"><b>Owners</b></font></td>
+          <td width="25%" bgcolor="#000066" align="center"><font color="#ffffff"><b>Lead Developers</b></font></td>
+          <td width="25%" bgcolor="#000066" align="center"><font color="#ffffff"><b>Development Team</b></font></td>
+		  <td width="25%" bgcolor="#000066" align="center"><font color="#ffffff"><b>Support Team</b></font></td>
+        </tr>
+    	<tr bgcolor="#f5f5f5" valign="top"> 
+          <td width="25%" align="left" nowrap>
+          <p class="team">Michael Anderson (reinsnitz)<br>
+          Pierre Gorissen (gor)<br>
+          Huw Reddick (HuwR)<br>
+          Richard Kinser (RichardKinser)<br></p></td>
+          <td width="25%" align="left" nowrap>
+		  <p class="team">Rui Ribeiro (ruirib)<br>
+		  David Greening (Classicmotorcycling)<br></p>		  
+		  </td>
+          <td width="25%" align="left" nowrap>
+          <p class="team">David Silvera (Davio)<br>
+		  (-gary)<br>
+		  Michael Reisinger (OneWayMule)<br>
+          Doug Gorin (Doug G)<br>
+          David Maxwell (davemaxwell)<br></p></td>
+          <td width="25%" align="left" nowrap>
+          <p class="team">Mark (AnonJr)<br>
+          Paddy (pdrg)<br>
+          Peter Noble (Shaggy)<br>
+          Padraic Lavin (Podge)<br>
+		  Marcel Göertz (MarcelG)<br>
+		  Brangwyn Reardon (Gremlin)</p></td>
+        </tr>
+      </table>
+	  <br><br>
+	  <table align="center" border="0" cellspacing="1" cellpadding="3" bgcolor="#000000" bordercolor="#111111">
+	    <tr bgcolor="slateblue">
+		  <td width="100%" bgcolor="#000066" align="center" colspan="3"><font color="#ffffff"><b>Previous Team Members</b></font></td>
+		</tr>
+        <tr bgcolor="slateblue"> 
+          <td width="30%" bgcolor="#000066" align="center"><font color="#ffffff"><b>Lead Developers</b></font></td>
+          <td width="70%" bgcolor="#000066" align="center" colspan="2"><font color="#ffffff"><b>Development Team</b></font></td>
+        </tr>
+    	<tr bgcolor="#f5f5f5" valign="top"> 
+          <td align="left" nowrap>
+          <p class="team">Sue Crocker (heptite)<br>
+          John Miller Jr (John)<br></p>
+		  </td>
+		  <td align="left" nowrap>
+		  <p class="team">Dion Rentos (Kal Corp)<br>
+		  Bülent Özden (Bozden)<br>
+		  (Da Stimulator)<br>
+          Tim Teal (tteal)<br>
+          Geoff R (GeoffR)<br>
+          Jeffrey Alen Stana (jEFF)<br>
+          Josh Pape (Josh)<br>
+		  Kerry (Kerry)<br>
+          Luis Romao (zecompadre)<br>
+          M Houston (Sparty)<br>
+          Matt (Matt)<br>
+          Matthew (Matthew)<br>
+          Nathan LeMesurier (Nathan L)<br>
+          Richard Hay (anotherwin95)<br></p></td>
+		  <td align="left" nowrap>
+		  <p class="team"><div align="center"><b>(cont.)</b></div>
+          Scott Lemieux (slemieux)<br>
+          (animedj)<br>
+          (BogieMan)<br>
+          (brkonthru)<br>
+          (BuffyNET)<br>
+          (isuru)<br>
+          (Sabre Cat)<br>
+          (Smiddy)<br>
+          (Spoon)<br>
+          Kuai Ser Leng (Sting-)<br></p></td>
+        </tr>
+      </table>
+    <p>It wouldn't be here today if it weren’t for all of those mentioned and many more
+    who were not.</p>
+    <p>Additionally, Snitz Forums 2000 was originally based on another product called
+    ASP-DEv Forums (http://www.asp-dev.com), which was the work of John Penfold
+    &lt;asp@asp-dev.com&gt;, Tim Teal &lt;tteal@tealnet.com&gt; and all the people of the
+    ASP-DEv development group (http://www.asp-dev.com).</p>
+    <p class="note"><b>NOTE:</b> The product now has very little in common with the original application,
+    but as a courtesy to the original developer who asks not for any recognition, we
+    mention his original work.</p>
+    <p>Cheers!</p>
+    <p>Reinsnitz (Mike Anderson)<br />
+    http://forum.snitz.com<br />
+    manderson@snitz.com<br />
+    ><)))'></p>
+    <p>"For God so loved the world<br />
+    that he gave his one and only Son,<br />
+    that whoever believes in him<br />
+    shall not perish but have eternal life."</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- John 3:16 (NIV)</p></td>
+  </tr>
+  <tr>
+    <td><a href="#top"><img src="images/icon_go_up.gif" alt="Go To Top Of Page" align="right" height="15" width="15" border="0"></a></td>
+  </tr>
+  <tr>
+    <td width="100%">
+    <hr size="1">
+    <p align="center"><b>- - The Snitz Team&nbsp;| <a href="http://forum.snitz.com">http://forum.snitz.com</a> - -</b><br><br>
+    Copyright (C) 2000-09 Michael Anderson, Pierre Gorissen, Huw Reddick and Richard Kinser</td>
+  </tr>
+</table>
+
+</body>
+</html>

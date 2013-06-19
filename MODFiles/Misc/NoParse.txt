@@ -1,0 +1,68 @@
+Function NoParse(fString)
+ 	Dim oTag, cTag
+ 	Dim roTag, rcTag
+ 	Dim oTagPos, cTagPos
+ 	Dim nTagPos
+ 	Dim counter1, counter2
+ 	Dim strCodeText
+ 	Dim Tagcount
+ 	Dim strTempString, strResultString
+ 	TagCount = 2
+  	Dim CodeTags(2,2,2)
+ 	Dim strArray, strArray2
+
+ 	CodeTags(1,1,1) = "[noparse]"
+	CodeTags(1,2,1) = "[/noparse]"
+	CodeTags(1,1,2) = ""
+	CodeTags(1,2,2) = ""	
+	
+ 	CodeTags(2,1,1) = "[noparse]"
+ 	CodeTags(2,2,1) = "[/noparse]"
+ 	CodeTags(2,1,2) = CodeTags(1,1,2)
+ 	CodeTags(2,2,2) = CodeTags(1,2,2)
+
+ 	strResultString = ""
+ 	strTempString = fString
+
+ 	for counter1 = 1 to TagCount
+
+ 		oTag   = CodeTags(counter1,1,1)
+ 		roTag  = CodeTags(counter1,1,2)
+ 		cTag   = CodeTags(counter1,2,1)
+ 		rcTag  = CodeTags(counter1,2,2)
+ 		oTagPos = InStr(1, strTempString, oTag, 1)
+ 		cTagPos = InStr(1, strTempString, cTag, 1)
+
+ 		if (oTagpos > 0) and (cTagPos > 0) then
+ 		 	strArray = Split(strTempString, oTag, -1)
+ 		 	for counter2 = 0 to Ubound(strArray)
+ 		 		if (Instr(1, strArray(counter2), cTag) > 0) then
+ 		 			strArray2 = split(strArray(counter2), cTag, -1)
+					strCodeText = trim(strArray2(0))
+					strCodeText = CleanCode(strCodeText)
+					strCodeText = replace(strCodeText, "[br]", vbNewLine)
+					strCodeText = replace(strCodeText, "<br />", vbNewLine)
+ 					'replace all forumcode tags to their hex equivalent
+ 					strCodeText = replace(strCodeText, "#", "&#35;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, "]", "&#93;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, "[", "&#91;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, "/", "&#47;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, ".", "&#46;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, ")", "&#41;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, "(", "&#40;", 1, -1, 1) ' ## replace by entity equivalent
+ 					strCodeText = replace(strCodeText, ":", "&#58;", 1, -1, 1) ' ## replace by entity equivalent
+ 					'done replacing
+ 					strCodeText = replace(strCodeText, vbNewLine, "<br />")
+ 		 			strResultString = strResultString & roTag & strCodeText & rcTag & strArray2(1)
+ 		 		else
+ 		 			strResultString = strResultString & strArray(counter2)
+ 		 		end if	
+ 		 	next  
+
+			strTempString = strResultString
+ 			strResultString = ""
+ 		end if
+	next
+
+	NoParse = strTempString
+end function

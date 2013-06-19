@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>Integration MOD for Snitz Forums 3.4.xx v1.2</title>
+</head>
+
+<body>
+<h1>Integration MOD for Snitz Forums 3.4.xx v1.2</h1>
+<h2>Author: D3mon</h2>
+<h5>With thanks to Joatham for his additonal javascript code, adding dynamic colour changes in the admin. page (v1.1)</h5>
+<h3>Author site: http://www.buildyourown.org.uk</h3>
+<h3>Version History:</h3>
+v1.2 : Updated with additional installation support for Snitz version 3.4.04<br />
+v1.1 : Added dynamic color/border update feature to display on admin page (29th Nov 2002)<br />
+v1.0 : Official release<br />
+Beta : Testing release<br />
+
+
+<h5>Please note that this modification is provided free of charge and on an 'as is' basis. Future support from the author is not necessarily implied
+and the authors of Snitz Forums or this modification cannot be held responsible for any damage to equipment or data that might result during use/misuse of the aforementioned
+software.<br>
+However, significant care has been taken to ensure that this modification performs safely and efficiently within the limitations of its intended purpose, and its author
+would welcome any and all feedback in order to help improve and support it further.</h5>
+<h5>Use of this software is considered an acceptance of the above terms.</h5>
+<hr />
+<h3>Introduction</h3>
+<hr />
+<p>
+One of the most common questions I get asked about Snitz forums is:<br>
+<strong>&quot;Now that my Forums are installed and working, how do I modify the code so that it looks more like the other pages on my web site?&quot;</strong><br>
+<br>
+I refer to this process as 'Site Integration', as you are effectively 'integrating' the forums into your exisiting web site.<br>
+The standard Snitz forums have a very 'standard' look and feel. This is intentional, as the Snitz authors want to concentrate on
+producing good quality, secure and functional code. The graphical 'eye-candy' is down to <u>you</u> as the webmaster of your site.<br>
+<br>
+After helping a number of people integrate their Snitz forums into their existing sites, I decided to create this MOD, not only to
+simplify this process, but to attempt to make the work future-proof, such that any further upgrades to the forum software, would not
+require the complete re-writing of the addtional integration code.<br>
+<br>
+It works by having all the additional code stored in seperate 'area' files that are 'read in' while the forum pages are displayed.
+This has two significant advantages:
+<ol>
+<li>The 'area' files can be saved and re-used in future versions of Snitz forums (once the Site Integration MOD has been re-installed)</li>
+<li>Changes to the integration code in the 'area' files are made in just one file, instead of having repeated code in each of the main forum files</li>
+</ol>
+This MOD is intended for use with Snitz forums software, version 3.4 and above. For maximum ease of installation, I advise that is installed to a
+completely fresh installation of Snitz (before any other MODS are installed).<br>
+<br>
+Good luck and Enjoy!<br>
+<br>
+<strong>D3mon</strong> >:o)
+</p>
+<hr />
+<h3>Installation - Upgrading from v1.0</h3>
+<hr />
+<p>To upgrade from version 1.0, simply replace your current <strong>admin_config_integration.asp</strong> file with the new version found in this package.</p>
+<hr />
+<h3>Installation - file copying</h3>
+<hr />
+<p><ol compact>
+<li>Copy these files (found in this .zip package) to your forums directory:
+<strong>
+	<ul type="disc" compact><li>dbs_Integration.asp</li>
+	<li>admin_config_integration.asp</li>
+	<li>inc_site_header.asp</li>
+	<li>inc_site_footer.asp</li>
+	<li>inc_site_left.asp</li>
+	<li>inc_site_right.asp</li>
+	</ul>
+</strong></li>
+<li>In Admin options, select '<strong>MOD Setup</strong>'</li>
+<li>Select '<strong>Site Integration Mod for 3.4.xx</strong>' from the drop down box and click '<strong>Update</strong>'.</li>
+</ol>
+Once this is completed you will have installed all the necessary files and automatically added the necessary information into your forums database.<br />
+<br />
+<hr />
+<h3>Installation - file editing</h3>
+<hr />
+You now need to insert the extra code that is required to complete the installation of this MOD. Open each of the following files in your
+forums folder using your favourite text editor. Using one that is capable of displaying line numbers is a significant advantage at this stage.
+<br /><strong>Note that the line numbers specified below are approximate and may be adversely affected by the installation of other MODS to your Forum code.</strong> 
+</p>
+
+<h3>Changes to file - config.asp</h3>
+<p>
+<strong>Find the following line:</strong><br>
+(Snitz v3.4.01 - approx line #114<br>
+Snitz v3.4.02 - approx line #124<br>
+Snitz v3.4.03 - approx line #127<br>
+Snitz v3.4.04 - approx line #123)
+</p>
+<textarea cols="80" rows="3" readonly>
+Dim SubCount, MySubCount
+</textarea>
+<p>
+<strong>Below that, <span style="color:red;">insert</span> these lines:</strong>
+</p>
+<textarea cols="80" rows="5" readonly>
+'### Integration MOD ###
+Dim strSiteHeader, strSiteLeft, strSiteRight, strSiteFooter, strSiteIntegEnabled, strSiteBorder
+'### Integration MOD ###
+</textarea>
+<p>
+<strong>Then find:</strong><br>
+(Snitz v3.4.01 - approx line #381<br>
+Snitz v3.4.02 - approx line #388<br>
+Snitz v3.4.03 - approx line #394<br>
+Snitz v3.4.04 - approx line #390)
+</p>
+<textarea cols="80" rows="3" readonly>
+strShowQuickReply = Application(strCookieURL & "STRSHOWQUICKREPLY")
+</textarea>
+<p>
+<strong>Below that, <span style="color:red;">insert</span> these lines:</strong>
+</p>
+<textarea cols="80" rows="9" readonly>
+'### Integration MOD ###
+strSiteHeader = Application(strCookieURL & "STRSITEHEADER")
+strSiteLeft = Application(strCookieURL & "STRSITELEFT")
+strSiteRight = Application(strCookieURL & "STRSITERIGHT")
+strSiteFooter = Application(strCookieURL & "STRSITEFOOTER")
+strSiteIntegEnabled = Application(strCookieURL & "STRSITEINTEGENABLED")
+strSiteBorder = Application(strCookieURL & "STRSITEBORDER")
+'### Integration MOD ###
+</textarea>
+
+<h3>Changes to file - admin_home.asp</h3>
+<p>
+<strong>Find:</strong><br>
+(Snitz v3.4.01 - approx line #84<br>
+Snitz v3.4.02 - approx line #138<br>
+Snitz v3.4.03 - approx line #138<br>
+Snitz v3.4.04 - approx line #134)
+</p>
+<textarea cols="80" rows="5" readonly>
+"                <LI><span class=""spnMessageText""><a href=""javascript:openWindow3('admin_config_order.asp')"">Category/Forum Order Configuration</a></span></LI>" & vbNewLine & _ 
+</textarea>
+<p>
+<strong>Below that, <span style="color:red;">insert</span> this line:</strong>
+</p>
+<textarea cols="80" rows="5" readonly>
+"                <LI><span class=""spnMessageText""><a href=""admin_config_integration.asp"">Site Integration Configuration</a></span></LI>" & vbNewLine & _
+</textarea>
+
+<h3>Changes to file - inc_header.asp</h3>
+<p>
+<strong>Find:</strong><br>
+(Snitz v3.4.01 - approx line #300<br>
+Snitz v3.4.02 - approx line #280<br>
+Snitz v3.4.03 - approx line #280<br>
+Snitz v3.4.04 - approx line #277)
+</p>
+<textarea cols="80" rows="3" readonly>
+"<a name=""top""></a><font face=""" & strDefaultFontFace & """>" & vbNewLine & _
+vbNewLine & _
+</textarea>
+<b>(note: in v3.4.04, there is no &lt;font&gt; tag)</b>
+<p>
+<strong><span style="color:red;">Replace</span> those lines with these:</strong>
+</p>
+<textarea cols="80" rows="9" readonly>
+"<a name=""top""></a>" & vbNewLine
+if strSiteIntegEnabled = "1" then
+  response.write "<table width=""100%"" border="""
+	if strSiteBorder = "1" then
+		response.write "1"
+	else
+		response.write "0"
+	end if
+	response.write """ cellspacing=""0"" cellpadding=""0"">" & vbNewLine
+  if strSiteHeader = "1" then
+    response.write "  <tr>" & vbNewLine & _
+    "    <td"
+    if strSiteLeft = "1" or strSiteRight = "1" then
+      if strSiteLeft = "1" and strSiteRight = "1" then
+        Response.write " colspan=""3"""
+      else
+		Response.write " colspan=""2"""
+      end if
+    end if
+    response.write ">"
+    %><!--#include file="inc_site_header.asp"-->&lt;%
+    response.write "</td>" & vbNewLine & _
+    "  </tr>" & vbNewLine
+  end if
+  response.write "  <tr>" & vbNewLine & _
+  "    <td valign=""top"">" & vbNewLine
+  if strSiteLeft = "1" then
+    %><!--#include file="inc_site_left.asp"-->&lt;%
+    response.write "</td>" & vbNewLine & _
+    "  <td valign=""top"">" & vbNewLine
+  end if
+end if
+response.write vbNewLine & _
+</textarea>
+
+<h3>Changes to file - inc_footer.asp</h3>
+<p>
+<strong>Find:</strong><br>
+(Snitz v3.4.01 - approx line #76<br>
+Snitz v3.4.02 - approx line #76<br>
+Snitz v3.4.03 - approx line #76<br>
+Snitz v3.4.04 - approx line #72)
+</p>
+<textarea cols="80" rows="3" readonly>
+"</table>" & vbNewLine & _
+"</font>" & vbNewLine & _
+</textarea>
+<b>(note: in v3.4.04, the &lt;/font&gt; tag on the second line has been replaced with a &lt;/body&gt; tag)</b>
+<p>
+<strong><span style="color:red;">Replace</span> those lines with these:</strong>
+</p>
+<textarea cols="80" rows="9" readonly>
+"</table>" & vbNewLine
+if strSiteIntegEnabled = "1" then
+  if strSiteRight = "1" then
+    Response.Write	"    </td>" & vbNewLine & _
+    "    <td valign=""top"">" & vbNewLine
+    %><!--#include file="inc_site_right.asp"-->&lt;%
+  end if
+  Response.Write	"    </td>" & vbNewLine & _
+  "  </tr>" & vbNewLine
+  if strSiteFooter = "1" then
+    Response.write  "  <tr>" & vbNewLine & _
+    "    <td"
+    if strSiteLeft = "1" or strSiteRight = "1" then
+      if strSiteLeft = "1" and strSiteRight = "1" then
+        Response.write " colspan=""3"""
+      else
+		Response.write " colspan=""2"""
+      end if
+    end if
+    Response.write ">"
+    %><!--#include file="inc_site_footer.asp"-->&lt;%
+    Response.write "    </td>" & vbNewLine & _
+    "  </tr>" & vbNewLine
+  end if
+  Response.write "</table>" & vbNewLine
+end if
+response.write "</body>" & vbNewLine & _
+</textarea>
+<p>
+Once this is completed, it may be necessary to close your browser completely and re-open it, then log out and back in as the
+forum administrator to complete the installation process. This may be the case if you find that the setting changes
+you make in the new site integration admin page do not seem to 'save' properly.
+</p>
+<hr /><h3>Configuring Site Integration</h3><hr />
+<p>
+From the Snitz forums 'Admin Options' page, select <strong>Site Integration Configuration</strong>.
+</p>
+<p>
+Enable the new features by clicking the 'on' radio button at the top of the page, then select the 'areas' to be
+displayed using the radio buttons below.
+Currently 'enabled' areas will be shown in green on the map, with disabled areas shown as red.
+</p>
+<p>
+Each 'area' on the map corresponds to a new .asp file which was added back at the beggining of the installation as follows:
+<ul type="disc" compact>
+	<li><strong>inc_site_header.asp</strong></li>
+	<li><strong>inc_site_footer.asp</strong></li>
+	<li><strong>inc_site_left.asp</strong></li>
+	<li><strong>inc_site_right.asp</strong></li>
+</ul>
+If an area is enabled, the code within the appropriate .asp file is displayed on each page of the forums.
+As an example, your web site may have a large logo image at the top left. Simply copy the HTML (that displays the image)
+from one of your exisiting web site pages into the <strong>inc_site_header.asp</strong> file in the forums folder
+(the existing text line in the .asp file is provided as an example and can be removed) :<br>
+<br>
+e.g. <strong>&lt;img src="http://mydomain.com/images/logo.jpg"&gt;</strong>
+</p>
+...enable the header area in the admin page, and your should see that your logo is now displayed in its own area at the very
+top of the forum pages.<br>
+Experiment by adding different HTML to each of the 'area' files and enabling them!
+The 'area' files will <u>not</u> need any of the common HTML tags like &lt;BODY&gt;, &lt;HTML&gt; etc. and can also contain ASP code.
+Please note that due to the way that the MOD is implemented, any table structures that are used in the 'area' files must be complete i.e.<br>
+<br>
+
+<table cellspacing="0" cellpadding="10" border="1" bordercolor="white">
+<tr>
+<td bordercolor="green"><strong>&lt;table border="0" cellspacing="0" cellpadding="0"&gt;<br>
+&nbsp;&nbsp;&lt;tr&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt; code &lt;/td&gt;<br>
+&nbsp;&nbsp;&lt;/tr&gt;<br>
+&nbsp;&nbsp;&lt;tr&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt; more code &lt;/td&gt;<br>
+&nbsp;&nbsp;&lt;/tr&gt;<br>
+&lt;/table&gt;</strong></td>
+</tr>
+<tr>
+<td align="center"><h2 style="color:green">GOOD</h2></td>
+</tr>
+<tr>
+<td bordercolor="red"><strong>&lt;table border="0" cellspacing="0" cellpadding="0"&gt;<br>
+&nbsp;&nbsp;&lt;tr&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&gt; code &lt;/td&gt;<br>
+&nbsp;&nbsp;&lt;/tr&gt;<br></strong></td>
+</tr>
+<tr><td align="center"><h2 style="color:red">BAD</h2></td></tr>
+</table>
+</body>
+</html>

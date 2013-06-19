@@ -1,0 +1,386 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Checklist</title>
+<style>
+body	{font-family:Verdana, sans-serif;
+		font-size: 10pt;}
+table	{font-family:Verdana, sans-serif;
+		font-size: 10pt;}
+.uline      { border-bottom: solid 1px black;  }
+</style>
+</head>
+
+<body>
+
+<h1 align="center">UserGroups MOD v1.0 for Snitz v3.4.x<br>
+Beta Version <font color="#800000">2</font></h1>
+<h2 align="center">Installation Checklist</h2>
+<hr>
+<h3>Pre-Installation</h3>
+<table border="0" width="100%" cellspacing="0" bordercolor="#000000">
+  <tr>
+    <td width="15">&nbsp;</td>
+    <td width="50%"><b>Step</b></td>
+    <td width="50%"><b>Notes</b></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Make a backup of your existing forum files.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Make a backup of your database.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">(Optional) Make a copy of your
+existing forum folder and make MOD changes to the copy.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+</table>
+<h3>Installation</h3>
+<table border="0" width="100%" cellspacing="0">
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>Step</b></td>
+    <td width="50%"><b>Notes</b></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Insert the text into the Alternate MOD Setup
+      box in Admin Options to create new tables and fields.&nbsp; Verify that all tables and fields were created
+      successfully.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Upload the files usergroups.asp and admin_usergroups.asp to
+      your forum folder.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>active.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 277 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>admin_home.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 145 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>config.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 127 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 392 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>forum.asp</b></td>
+    <td width="50%"></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 168 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>inc_func_common.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1100 delete the isAllowedMember and
+      OldisAllowedMember functions.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Insert new code in place of deleted functions.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>inc_func_secure.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 103 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 171 add code.</td>
+    <td class="uline" width="50%"></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>inc_header.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 227 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 509 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>inc_profile.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 477 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>pop_delete.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 356 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 477 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 595 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>pop_profile.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 709 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1592 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>post.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 243 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1310 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%"></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>post_info.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 266 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1159 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1269 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1407 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1488 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1814 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>register.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 196 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 577 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 875 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%">&nbsp;</td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>topic.asp</b></td>
+    <td width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 197 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1106 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Approximately line 1159 add code.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+</table>
+<h3>Post-Installation</h3>
+<table border="0" width="100%" cellspacing="0">
+  <tr>
+    <td width="15" valign="top"></td>
+    <td width="50%"><b>Step</b></td>
+    <td width="50%"><b>Notes</b></td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">Thoroughly test the MOD installation.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="15" valign="top"><input type="checkbox" name="C1" value="ON"></td>
+    <td width="50%">(Optional) If using a copy of your forum folder to make MOD changes, replace
+      all original forum files with the contents of the new folder.</td>
+    <td class="uline" width="50%">&nbsp;</td>
+  </tr>
+</table>
+
+</body>
+
+</html>

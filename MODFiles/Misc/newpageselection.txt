@@ -1,0 +1,83 @@
+How to install:
+0. Open the file forum.asp
+1. Look for the function sub DropDownPaging(fnum)
+2. Rename this function to DropDownPaging2(fnum)
+3. Copy the new function (it has the same name) below theold one.
+4. Save and you are set
+
+
+----------------------- THE CODE-------------------------------------
+'##############################################
+'## New Function which is not a DropDown but 
+'## we keep the functions name so that it works
+'## with Snitz
+'###############################################
+sub DropDownPaging(fnum)
+	if maxpages > 1 then
+		if mypage = "" then
+			pge = 1
+		else
+			pge = mypage
+		end if
+		Response.Write	"                <td><font face=""" & strDefaultFontFace & """ size=""" & strDefaultFontSize & """>" & vbNewLine
+		if fnum = 1 then
+			Response.Write("                <b>Page:</b> [")
+		else
+			Response.Write("                <b>Total Pages (" & maxpages &"):</b>[")
+		end if
+		
+		'We define the range to show
+		'we will currently only show 10 pages as the default
+		PagesToShow = 10
+		
+		If cLng(pge) > 1 then
+			MinPageToShow = cLng(pge) - 1
+		Else
+			MinPageToShow = 1
+		End If
+		
+		If cLng(pge) + PagesToShow > maxpages then
+			MaxPageToShow = maxpages
+		Else
+			MaxPageToShow = cLng(pge) + PagesToShow
+		End If
+		
+		If MaxPageToShow < maxpages then
+			ShowMaxPage = True
+		Else
+			ShowMaxPage = False
+		End If
+
+		If MinPageToShow > 1 then
+			ShowMinPage = True
+		Else
+			ShowMinPage = False
+		End If
+		
+		If ShowMinPage then
+			Response.Write "<a href=""forum.asp?whichpage=1&FORUM_ID=" & Forum_ID &"&sortfield=" & strtopicsortfld & "&sortorder=" & strtopicsortord
+			Response.Write """> << First </a>"
+		End If
+		
+		for counter = MinPageToShow to MaxPageToShow
+			if counter <> cLng(pge) then   
+				Response.Write "<a href=""forum.asp?whichpage=" & counter & "&FORUM_ID=" & Forum_ID &"&sortfield=" & strtopicsortfld & "&sortorder=" & strtopicsortord
+				If ArchiveView = "true" then
+					Response.Write "&ARCHIVE=" & ArchiveView
+				End If	
+				Response.Write """> " & counter & " </a>"
+			else
+				Response.Write " <b>[" & counter & "]</b>"
+			end if
+		next
+		
+		If ShowMaxPage then
+			Response.Write "<a href=""forum.asp?whichpage=" & maxpages & "&FORUM_ID=" & Forum_ID &"&sortfield=" & strtopicsortfld & "&sortorder=" & strtopicsortord
+			Response.Write """> >> Last </a>"
+		End If
+		
+		Response.Write " ]"
+		Response.Write("</font></td>" & vbNewLine)
+	end if
+end sub
+'#################################################
